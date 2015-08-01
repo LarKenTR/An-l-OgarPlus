@@ -20,7 +20,7 @@ function BotPlayer() {
     this.target;
     this.targetVirus; // Virus used to shoot into the target
 
-    this.ejectMass = 0; // Amount of times to eject mass
+    this.ejectMass = 1; // Amount of times to eject mass
     this.oldPos = {x: 0, y:0};
 }
 
@@ -48,7 +48,7 @@ BotPlayer.prototype.getLowestCell = function() {
 // Override
 
 BotPlayer.prototype.updateSightRange = function() { // For view distance
-    var range = 1000; // Base sight range
+    var range = 1500; // Base sight range
 
     if (this.cells[0]) {
         range += this.cells[0].getSize() * 2.5;
@@ -92,7 +92,7 @@ BotPlayer.prototype.update = function() { // Overrides the update function from 
     this.clearLists();
 
     // Ignores targeting cells below this mass
-    var ignoreMass = Math.min((cell.mass / 10), 150); 
+    var ignoreMass = Math.min(cell.mass / 2.5); 
 
     // Loop
     for (i in this.visibleNodes) {
@@ -114,10 +114,10 @@ BotPlayer.prototype.update = function() { // Overrides the update function from 
                 }
 
                 // Check for danger
-                if (cell.mass > (check.mass * 1.25)) {
+                if (cell.mass > (check.mass * 1.125)) {
                     // Add to prey list
                     this.prey.push(check);
-                } else if (check.mass > (cell.mass * 1.25)) {
+                } else if (check.mass > (cell.mass * 1.2)) {
                     // Predator
                     var dist = this.getDist(cell, check) - (r + check.getSize());
                     if (dist < 300) {
@@ -138,7 +138,7 @@ BotPlayer.prototype.update = function() { // Overrides the update function from 
                 this.virus.push(check);
                 break;
             case 3: // Ejected mass
-                if (cell.mass > 20) {
+                if (cell.mass > 16) {
                     this.food.push(check);
                 }
                 break;
@@ -261,7 +261,7 @@ BotPlayer.prototype.decide = function(cell) {
 
             // Cheating
             if (cell.mass < 250) {
-                cell.mass += 1;
+                cell.mass += 0;
             } 
 
             if (this.juke) {
@@ -271,7 +271,7 @@ BotPlayer.prototype.decide = function(cell) {
 
             break;
         case 3: // Target prey
-            if ((!this.target) || (cell.mass < (this.target.mass * 1.25)) || (this.visibleNodes.indexOf(this.target) == -1)) {
+            if ((!this.target) || (cell.mass < (this.target.mass * 1.2)) || (this.visibleNodes.indexOf(this.target) == -1)) {
                 this.target = this.getRandom(this.prey);
             }
             //console.log("[Bot] "+cell.getName()+": Targeting "+this.target.getName());
@@ -279,10 +279,10 @@ BotPlayer.prototype.decide = function(cell) {
 
             this.mouse = {x: this.target.position.x, y: this.target.position.y};
 
-            var massReq = 1.25 * (this.target.mass * 2 ); // Mass required to splitkill the target
+            var massReq = 1.25 * (this.target.mass * 2 ) * this.cells.length; // Mass required to splitkill the target
 
-            if ((cell.mass > massReq) && (this.cells.length == 1)) { // Will not split into more than 2 cells
-                var splitDist = (4 * (cell.getSpeed() * 5)) + (cell.getSize() * 1.75); // Distance needed to splitkill
+            if ((cell.mass > massReq) && (this.cells.length < 3)) { // Will not split into more than 4 cells
+                var splitDist = (4 * (cell.getSpeed() * 6)) + (cell.getSize() * 1.75); // Distance needed to splitkill
                 var distToTarget = this.getAccDist(cell,this.target); // Distance between the target and this cell
 
                 if (splitDist >= distToTarget) {
@@ -325,7 +325,7 @@ BotPlayer.prototype.decide = function(cell) {
                 this.mouse = {x: this.targetVirus.position.x, y: this.targetVirus.position.y};
 
                 // Shoot
-                for (var v = 0; v < 7 ;v++) {
+                for (var v = 0; v < 5 ;v++) {
                     this.gameServer.ejectMass(this);
                 }
 

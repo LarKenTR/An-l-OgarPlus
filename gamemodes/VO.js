@@ -2,11 +2,11 @@ var FFA = require('./FFA'); // Base gamemode
 var Food = require('../entity/Food');
 var FoodUp = require('../entity/Food').prototype.sendUpdate;
 
-function Rainbow() {
+function VO() {
     FFA.apply(this, Array.prototype.slice.call(arguments));
 
-    this.ID = 5;
-    this.name = "Rainbow FFA";
+    this.ID = 3;
+    this.name = "Virus Off";
     this.specByLeaderboard = true;
     
     this.colors = [
@@ -43,12 +43,12 @@ function Rainbow() {
     this.speed = 1; // Speed of color change
 }
 
-module.exports = Rainbow;
-Rainbow.prototype = new FFA();
+module.exports = VO;
+VO.prototype = new FFA();
 
 // Gamemode Specific Functions
 
-Rainbow.prototype.changeColor = function(node) {
+VO.prototype.changeColor = function(node) {
     if (typeof node.rainbow == 'undefined') {
         node.rainbow = Math.floor(Math.random() * this.colors.length);
     } 
@@ -63,17 +63,17 @@ Rainbow.prototype.changeColor = function(node) {
 
 // Override
 
-Rainbow.prototype.onServerInit = function() {
+VO.prototype.onServerInit = function() {
     // Overrides the update function
     Food.prototype.sendUpdate = function() {return true;};
 }
 
-Rainbow.prototype.onChange = function() {
+VO.prototype.onChange = function() {
     // Reset
     Food.prototype.sendUpdate = FoodUp;
 }
 
-Rainbow.prototype.onTick = function(gameServer) {
+VO.prototype.onTick = function(gameServer) {
     var color, node;
     // Change color
     for (var i in gameServer.nodes) {

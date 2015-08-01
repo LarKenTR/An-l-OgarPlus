@@ -48,12 +48,14 @@ Log.prototype.setup = function(gameServer) {
     }
 };
 
-Log.prototype.onConnect = function(ip) {
-    // Nothing
+Log.prototype.onDisconnect = function(ip) {
+    // Disconnect Message
+	console.log("[Seth] Some scrub win the ip " + ip + " left!")
 };
 
-Log.prototype.onDisconnect = function(ip) {
-    // Nothing
+Log.prototype.onConnect = function(ip) {
+	// Join Message
+	console.log("[Seth] Some scrub win the ip " + ip + " joined!")
 };
 
 Log.prototype.onCommand = function(command) {

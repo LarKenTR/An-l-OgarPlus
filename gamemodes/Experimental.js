@@ -17,10 +17,10 @@ function Experimental() {
     this.tickMotherS = 0;
     
     // Config
-    this.motherCellMass = 500;
+    this.motherCellMass = 200;
     this.motherUpdateInterval = 5; // How many ticks it takes to update the mother cell (1 tick = 50 ms)
-    this.motherSpawnInterval = 80; // How many ticks it takes to spawn another mother cell - Currently 5 seconds
-    this.motherMinAmount = 50;
+    this.motherSpawnInterval = 100; // How many ticks it takes to spawn another mother cell - Currently 5 seconds
+    this.motherMinAmount = 5;
 }
 
 module.exports = Experimental;
@@ -148,7 +148,7 @@ function MotherCell() { // Temporary - Will be in its own file if Zeach decides 
 MotherCell.prototype = new Cell(); // Base
 
 MotherCell.prototype.getEatingRange = function() {
-    return this.getSize() * .25;
+    return this.getSize() * .5;
 };
 
 MotherCell.prototype.update = function(gameServer) {
@@ -156,7 +156,7 @@ MotherCell.prototype.update = function(gameServer) {
     this.mass += .25;
 	
     // Spawn food
-    var maxFood = 30; // Max food spawned per tick
+    var maxFood = 10; // Max food spawned per tick
     var i = 0; // Food spawn counter
     while ((this.mass > gameServer.gameMode.motherCellMass) && (i < maxFood))  {
         // Only spawn if food cap hasn been reached
@@ -231,7 +231,7 @@ MotherCell.prototype.spawnFood = function(gameServer) {
     };
 
     // Spawn food
-    var f = new Food(gameServer.getNextNodeId(), null, pos, gameServer.config.mcFoodMass);
+    var f = new Food(gameServer.getNextNodeId(), null, pos, gameServer.config.foodMass);
     f.setColor(gameServer.getRandomColor());
 
     gameServer.addNode(f);

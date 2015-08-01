@@ -26,16 +26,41 @@ var fillChar = function (data, char, fieldLength, rTL) {
 // Commands
 
 Commands.list = {
+    help: function(gameServer,split) {
+        console.log("========================== HELP ============================");
+        console.log("[Seth] addbot     : add bot to the server");
+        console.log("[Seth] board      : set scoreboard text");
+        console.log("[Seth] boardreset : reset scoreboard text");
+        console.log("[Seth] change     : change specified settings");
+        console.log("[Seth] clear      : clear console output");
+        console.log("[Seth] color      : set cell(s) color by client ID");
+        console.log("[Seth] stop       : stop the server");
+        console.log("[Seth] food       : spawn food at specified Location");
+        console.log("[Seth] gamemode   : change server gamemode");
+        console.log("[Seth] kick       : kick player or bot by client ID");
+        console.log("[Seth] kill       : kill cell(s) by client ID");
+        console.log("[Seth] killall    : kill everyone");
+        console.log("[Seth] mass       : set cell(s) mass by client ID");
+        console.log("[Seth] name       : change cell(s) name by client ID");
+        console.log("[Seth] playerlist : get list of players and bots");
+        console.log("[Seth] pause      : pause game , freeze all cells");
+        console.log("[Seth] reload     : reload config");
+        console.log("[Seth] status     : get server status");
+        console.log("[Seth] tp         : teleport player to specified location");
+        console.log("[Seth] virus      : spawn virus at a specified Location");
+        console.log("[Seth] ping       : checks your ping")
+		console.log("============================================================");
+    },
     addbot: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
-            add = 1; // Adds 1 bot if user doesnt specify a number
+            add = 10; // Adds 1 bot if user doesnt specify a number
         }
 
         for (var i = 0; i < add; i++) {
             gameServer.bots.addBot();
         }
-        console.log("[Console] Added "+add+" player bots");
+        console.log("[Seth] Added "+add+" player bots");
     },
     board: function(gameServer,split) {
         var newLB = [];
@@ -47,7 +72,7 @@ Commands.list = {
         gameServer.gameMode.packetLB = 48;
         gameServer.gameMode.specByLeaderboard = false;
         gameServer.gameMode.updateLB = function(gameServer) {gameServer.leaderboard = newLB}; 
-        console.log("[Console] Successfully changed leaderboard values");
+        console.log("[Seth] Successfully changed leaderboard values");
     },
     boardreset: function(gameServer) {
         // Gets the current gamemode
@@ -56,7 +81,7 @@ Commands.list = {
         // Replace functions
         gameServer.gameMode.packetLB = gm.packetLB;
         gameServer.gameMode.updateLB = gm.updateLB; 
-        console.log("[Console] Successfully reset leaderboard");
+        console.log("[Seth] Successfully reset leaderboard");
     },
     change: function(gameServer,split) {
         var key = split[1];
@@ -71,9 +96,9 @@ Commands.list = {
 
         if (typeof gameServer.config[key] != 'undefined') {
             gameServer.config[key] = value;
-            console.log("[Console] Set " + key + " to " + value);
+            console.log("[Seth] Set " + key + " to " + value);
         } else {
-            console.log("[Console] Invalid config value");
+            console.log("[Seth] Invalid config value");
         }
     },
     clear: function() {
@@ -83,7 +108,7 @@ Commands.list = {
         // Validation checks
         var id = parseInt(split[1]);
         if (isNaN(id)) {
-            console.log("[Console] Please specify a valid player ID!");
+            console.log("[Seth] No one has that player ID!");
             return;
         }
 
@@ -104,18 +129,21 @@ Commands.list = {
             }
         }
     },
-    exit: function(gameServer,split) {
-        console.log("[Console] Closing server...");
+    stop: function(gameServer,split) {
+		process.stdout.write('\033c');
+		process.stdout.write('\2');
+		console.log("Bye!\2");
         gameServer.socketServer.close();
         process.exit(1);
-    },
+		window.close();
+	},	
     food: function(gameServer,split) {
         var pos = {x: parseInt(split[1]), y: parseInt(split[2])};
         var mass = parseInt(split[3]);
 
         // Make sure the input values are numbers
         if (isNaN(pos.x) || isNaN(pos.y)) {
-            console.log("[Console] Invalid coordinates");
+            console.log("[Seth] Invalid coordinates");
             return;
         }
 
@@ -128,7 +156,7 @@ Commands.list = {
         f.setColor(gameServer.getRandomColor());
         gameServer.addNode(f);
         gameServer.currentFood++; 
-        console.log("[Console] Spawned 1 food cell at ("+pos.x+" , "+pos.y+")");
+        console.log("[Seth] Spawned 1 food cell at ("+pos.x+" , "+pos.y+")");
     },
     gamemode: function(gameServer,split) {
         try {
@@ -139,13 +167,33 @@ Commands.list = {
             gameServer.gameMode.onServerInit(gameServer); // Resets the server
             console.log("[Game] Changed game mode to " + gameServer.gameMode.name);
         } catch (e) {
-            console.log("[Console] Invalid game mode selected");
+            console.log("[Seth] Invalid game mode selected");
+        }
+    },
+    kick: function(gameServer,split) {
+        var id = parseInt(split[1]);
+        if (isNaN(id)) {
+            console.log("[Seth] Please specify a valid player ID!");
+            return;
+        }
+        
+        for (var i in gameServer.clients) {
+            if (gameServer.clients[i].playerTracker.pID == id) {
+                var client = gameServer.clients[i].playerTracker;
+                var len = client.cells.length;
+                for (var j = 0; j < len; j++) {
+                    gameServer.removeNode(client.cells[0]);
+                }
+                client.socket.close();
+                console.log("[Seth] Kicked " + client.name);
+                break;
+            }
         }
     },
     kill: function(gameServer,split) {
         var id = parseInt(split[1]);
         if (isNaN(id)) {
-            console.log("[Console] Please specify a valid player ID!");
+            console.log("[Seth] Please specify a valid player ID!");
             return;
         }
 
@@ -159,7 +207,7 @@ Commands.list = {
                     count++;
                 }
 
-                console.log("[Console] Removed " + count + " cells");
+                console.log("[Seth] Removed " + count + " cells");
                 break;
             }
         }
@@ -171,19 +219,19 @@ Commands.list = {
             gameServer.removeNode(gameServer.nodesPlayer[0]);
             count++;
         }
-        console.log("[Console] Removed " + count + " cells");
+        console.log("[Seth] Removed " + count + " cells");
     },
     mass: function(gameServer,split) {
         // Validation checks
         var id = parseInt(split[1]);
         if (isNaN(id)) {
-            console.log("[Console] Please specify a valid player ID!");
+            console.log("[Seth] Please specify a valid player ID!");
             return;
         }
         
         var amount = Math.max(parseInt(split[2]),9);
         if (isNaN(amount)) {
-            console.log("[Console] Please specify a valid number");
+            console.log("[Seth] Please specify a valid number");
             return;
         }
 
@@ -195,7 +243,7 @@ Commands.list = {
                     client.cells[j].mass = amount;
                 }
 
-                console.log("[Console] Set mass of "+client.name+" to "+amount);
+                console.log("[Seth] Set mass of "+client.name+" to "+amount);
                 break;
             }
         }
@@ -204,13 +252,13 @@ Commands.list = {
         // Validation checks
         var id = parseInt(split[1]);
         if (isNaN(id)) {
-            console.log("[Console] Please specify a valid player ID!");
+            console.log("[Seth] Please specify a valid player ID!");
             return;
         }
         
         var name = split[2];
         if (typeof name == 'undefined') {
-            console.log("[Console] Please type a valid name");
+            console.log("[Seth] Please type a valid name");
             return;
         }
 
@@ -219,17 +267,17 @@ Commands.list = {
             var client = gameServer.clients[i].playerTracker;
 
             if (client.pID == id) {
-                console.log("[Console] Changing "+client.name+" to "+name);
+                console.log("[Seth] Changing "+client.name+" to "+name);
                 client.name = name;
                 return;
             }
         }
 
         // Error
-        console.log("[Console] Player "+id+" was not found");
+        console.log("[Seth] Player "+id+" was not found");
     },
     playerlist: function(gameServer,split) {
-        console.log("[Console] Showing " + gameServer.clients.length + " players: ");
+        console.log("[Seth] Showing " + gameServer.clients.length + " players: ");
         console.log(" ID         | IP              | "+fillChar('NICK', ' ', gameServer.config.playerMaxNickLength)+" | CELLS | SCORE  | POSITION    "); // Fill space
         console.log(fillChar('', '-', ' ID         | IP              |  | CELLS | SCORE  | POSITION    '.length + gameServer.config.playerMaxNickLength));
         for (var i = 0; i < gameServer.clients.length; i++) {
@@ -278,7 +326,11 @@ Commands.list = {
     pause: function(gameServer,split) {
         gameServer.run = !gameServer.run; // Switches the pause state
         var s = gameServer.run ? "Unpaused" : "Paused";
-        console.log("[Console] " + s + " the game.");
+        console.log("[Seth] " + s + " the game.");
+    },
+    reload: function(gameServer) {
+        gameServer.loadConfig();
+        console.log("[Seth] Reloaded the config file successfully");
     },
     status: function(gameServer,split) {
         // Get amount of humans/bots
@@ -291,23 +343,23 @@ Commands.list = {
             }
         }
         //
-        console.log("[Console] Connected players: "+gameServer.clients.length+"/"+gameServer.config.serverMaxConnections);
-        console.log("[Console] Players: "+humans+" Bots: "+bots);
-        console.log("[Console] Server has been running for "+process.uptime()+" seconds.");
-        console.log("[Console] Current memory usage: "+process.memoryUsage().heapUsed/1000+"/"+process.memoryUsage().heapTotal/1000+" kb");
-        console.log("[Console] Current game mode: "+gameServer.gameMode.name);
+        console.log("[Seth] Connected players: "+gameServer.clients.length+"/"+gameServer.config.serverMaxConnections);
+        console.log("[Seth] Players: "+humans+" Bots: "+bots);
+        console.log("[Seth] Server has been running for "+process.uptime()+" seconds.");
+        console.log("[Seth] Current memory usage: "+process.memoryUsage().heapUsed/1000+"/"+process.memoryUsage().heapTotal/1000+" kb");
+        console.log("[Seth] Current game mode: "+gameServer.gameMode.name);
     },
     tp: function(gameServer,split) {
         var id = parseInt(split[1]);
         if (isNaN(id)) {
-            console.log("[Console] Please specify a valid player ID!");
+            console.log("[Seth] Please specify a valid player ID!");
             return;
         }
 
         // Make sure the input values are numbers
         var pos = {x: parseInt(split[2]), y: parseInt(split[3])};      
         if (isNaN(pos.x) || isNaN(pos.y)) {
-            console.log("[Console] Invalid coordinates");
+            console.log("[Seth] Invalid coordinates");
             return;
         }
         
@@ -320,7 +372,7 @@ Commands.list = {
                     client.cells[j].position.y = pos.y;
                 }
 
-                console.log("[Console] Teleported "+client.name+" to ("+pos.x+" , "+pos.y+")");
+                console.log("[Seth] Teleported "+client.name+" to ("+pos.x+" , "+pos.y+")");
                 break;
             }
         }
@@ -331,7 +383,7 @@ Commands.list = {
          
         // Make sure the input values are numbers
         if (isNaN(pos.x) || isNaN(pos.y)) {
-            console.log("[Console] Invalid coordinates");
+            console.log("[Seth] Invalid coordinates");
             return;
         } if (isNaN(mass)) {
             mass = gameServer.config.virusStartMass;
@@ -340,6 +392,9 @@ Commands.list = {
         // Spawn
         var v = new Entity.Virus(gameServer.getNextNodeId(), null, pos, mass);
         gameServer.addNode(v);
-        console.log("[Console] Spawned 1 virus at ("+pos.x+" , "+pos.y+")");
+        console.log("[Seth] Spawned 1 virus at ("+pos.x+" , "+pos.y+")");
     },
+	ping: function(gameServer,split) {
+		console.log("pong!")
+	}
 };

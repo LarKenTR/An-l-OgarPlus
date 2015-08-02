@@ -48,7 +48,7 @@ Cell.prototype.getSize = function() {
 };
 
 Cell.prototype.addMass = function(n) {
-    if(this.mass > this.owner.gameServer.config.playerMaxMass && this.owner.cells.length) {
+    if(this.mass + n > this.owner.gameServer.config.playerMaxMass && this.owner.cells.length < this.owner.gameServer.config.playerMaxCells) {
         this.mass = (this.mass + n) / 2;
         this.owner.gameServer.newCellVirused(this.owner, this, 0, this.mass, 150);
     } else {
@@ -60,7 +60,7 @@ Cell.prototype.getSpeed = function() {
     // Old formula: 5 + (20 * (1 - (this.mass/(70+this.mass))));
     // Based on 50ms ticks. If updateMoveEngine interval changes, change 50 to new value
     // (should possibly have a config value for this?)
-    return 60 * Math.pow(this.mass, -1.0 / 2.25);
+    return 30 * Math.pow(this.mass, -1.0 / 4.5) * 50 / 40;
 };
 
 Cell.prototype.setAngle = function(radians) {

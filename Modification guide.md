@@ -8,12 +8,10 @@ There are a few things to know first!
 functions are the start of a new code block. Blocks are areas of code in Curly brackets{}. Following them come
 parameters which are in parenthesis. EX:
 
-[code]
 function Hello(name) {
 	name = "Seth"
 	console.log("Hello, " + name"!")
 }
-[/code]
 
 This code block would say "Hello, Seth!" in the console if you type Hello.
 You can learn more about coding in javascript at https://www.codecademy.com/courses/getting-started-v2/0/1
@@ -33,10 +31,9 @@ If you're skilled then you could change the function, but for amateurs just stic
 
 ##Console Colors
 If you want to add colors to your server console, you're gonna have to modify your Start.bat file.
-simply add in the color you want when there are no errors before [code]node index.js[/code] and the color
+simply add in the color you want when there are no errors before node index.js and the color
 when an error is found after it! Simple! Example:
 
-[code]
 @echo off
 Title Agar.io Server
 
@@ -47,7 +44,7 @@ node index.js
 color 0c
 echo.
 pause
-[/code]
+
 For the color codes go [here](http://ss64.com/nt/color.html)
 
 ##Entities
@@ -57,7 +54,6 @@ file, which is easy. For example, if You want to eject viruses, just change the 
 virus folder! Like this:
 	
 	Before:
-[code]
 module.exports = {
     Cell: require('./Cell'),
     PlayerCell: require('./PlayerCell'),
@@ -65,9 +61,8 @@ module.exports = {
     Virus: require('./Virus'),
     EjectedMass: require('./EjectedMass'),
 };
-[/code]
+	
 	After:
-[code]
 module.exports = {
     Cell: require('./Cell'),
     PlayerCell: require('./PlayerCell'),
@@ -75,7 +70,6 @@ module.exports = {
     Virus: require('./Virus'),
     EjectedMass: require('./Virus'),
 };
-[/code]
 	
 	Simple, right?
 

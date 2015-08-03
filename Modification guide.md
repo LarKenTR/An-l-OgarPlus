@@ -8,10 +8,12 @@ There are a few things to know first!
 functions are the start of a new code block. Blocks are areas of code in Curly brackets{}. Following them come
 parameters which are in parenthesis. EX:
 
+'''
 function Hello(name) {
 	name = "Seth"
 	console.log("Hello, " + name"!")
 }
+'''
 
 This code block would say "Hello, Seth!" in the console if you type Hello.
 You can learn more about coding in javascript at https://www.codecademy.com/courses/getting-started-v2/0/1
@@ -34,6 +36,7 @@ If you want to add colors to your server console, you're gonna have to modify yo
 simply add in the color you want when there are no errors before node index.js and the color
 when an error is found after it! Simple! Example:
 
+'''
 @echo off
 Title Agar.io Server
 
@@ -44,6 +47,7 @@ node index.js
 color 0c
 echo.
 pause
+'''
 
 For the color codes go [here](http://ss64.com/nt/color.html)
 

@@ -1,5 +1,5 @@
 # Ogar-Plus
-Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://github.com/OgarProject) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
+Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://ogarproject.com) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
 
 ## Obtaining and Using
 As Ogar is written in Node.js, you must have Node.js and its "ws" module installed to use it. Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js and the ws module, The server will NOT run!

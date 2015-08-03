@@ -62,7 +62,7 @@ Commands.list = {
         console.log("[Seth] kill       : kill cell(s) by client ID");
         console.log("[Seth] killall    : kill everyone");
         console.log("[Seth] mass       : set cell(s) mass by client ID");
-		console.log{"[Seth] merge	   : force a player to merge"}
+		console.log("[Seth] merge	   : force a player to merge");
         console.log("[Seth] name       : change cell(s) name by client ID");
         console.log("[Seth] playerlist : get list of players and bots");
         console.log("[Seth] pause      : pause game , freeze all cells");

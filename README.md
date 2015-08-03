@@ -80,6 +80,8 @@ The current available console commands are listed here. Command names are not ca
    * Kills all player cells on the map.
  - Mass [Player ID] [Number]
    * Sets the mass of all cells belonging to the specified player to [Number].
+ - Merge [Player ID]
+   * Forces the specified player to merge.
  - Name [Player ID] [New Name]
    * Changes the name of the player with the specified id with [New Name].
  - Playerlist
@@ -100,4 +102,4 @@ The current available console commands are listed here. Command names are not ca
    * Spawns a virus cell at those coordinates. If a mass value is not specified, then the server will default to "virusStartMass" in the config.
 
 ## License
-Please see (https://github.com/DaFudgeWizzad/Ogar-Plus/blob/master/LICENSE.md)
+Please see [this link](https://github.com/DaFudgeWizzad/Ogar-Plus/blob/master/LICENSE.md)

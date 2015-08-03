@@ -25,8 +25,29 @@ var fillChar = function (data, char, fieldLength, rTL) {
 
 // Commands
 
-Commands.list = {
-    help: function(gameServer,split) {
+Commands.list = { 
+	merge: function(gameServer,split) {
+		// Validation checks
+		var id = parseInt(split[1]);
+        if (isNaN(id)) {
+            console.log("[Console] Please specify a valid player ID!");
+            return;
+        }
+
+        // Sets merge time
+        for (var i in gameServer.clients) {
+            if (gameServer.clients[i].playerTracker.pID == id) {
+                var client = gameServer.clients[i].playerTracker;
+                for (var j in client.cells) {
+                    client.cells[j].calcMergeTime(0);
+                }
+
+                console.log("[Console] Forced " + client.name + " to merge cells");
+                break;
+            }
+        }
+    },
+	help: function(gameServer,split) {
         console.log("========================== HELP ============================");
         console.log("[Seth] addbot     : add bot to the server");
         console.log("[Seth] board      : set scoreboard text");
@@ -41,6 +62,7 @@ Commands.list = {
         console.log("[Seth] kill       : kill cell(s) by client ID");
         console.log("[Seth] killall    : kill everyone");
         console.log("[Seth] mass       : set cell(s) mass by client ID");
+		console.log{"[Seth] merge	   : force a player to merge"}
         console.log("[Seth] name       : change cell(s) name by client ID");
         console.log("[Seth] playerlist : get list of players and bots");
         console.log("[Seth] pause      : pause game , freeze all cells");

@@ -7,8 +7,8 @@ As Ogar is written in Node.js, you must have Node.js and its "ws" module install
 Windows:
 1. Download [node.js](https://nodejs.org/download/)
 2. Open CMD or Terminal (whatever OS you're running) as Administrator/root and type: npm install ws
-3. Download [VakoNoway]()'s "node_modules".(Solves a problem with ws) http://ogarproject.com/attachments/ogar-master-zip.1/
-4. Open Start.bat in /src/ or in Linux go to src/ and type: nodejs index.js
+3. Download [VakoNoway](http://ogarproject.com/members/vakonoway.80/)'s fixed node_modules.
+4. Open Start.bat in /src/ or in Linux go to src/ and type: nodejs index.js (Skip if on windows, already fixed)
 5. If you're running on port 443, make sure Skype is closed, otherwise choose another port by changing gameserver.ini.
 6. Go to your defaultgateway and forward your port to your local IP. (in Windows open CMD and type: ipconfig and look for IPv4 address)
 7. Locally connect by http://agar.io/?ip=127.0.0.1:yourport or by typing the JavaScript command: connect("ws://127.0.0.1:yourport")

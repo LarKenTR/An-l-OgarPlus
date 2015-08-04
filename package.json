@@ -1,0 +1,22 @@
+{
+  "name": "Ogar-Plus",
+  "version": "1.2.1",
+  "description": "Open source Agar.io server",
+  "main": "src/index.js",
+  "dependencies": {
+    "ws": "^0.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DaFudgeWizzad/Ogar-Plus"
+  },
+  "author": "DaFudgeWizzad",
+  "license": "Apache License 2.0",
+  "bugs": {
+    "url": "https://github.com/DaFudgeWizzad/Ogar-Plus/issues"
+  },
+}

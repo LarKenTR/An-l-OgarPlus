@@ -4,7 +4,7 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 ## Obtaining and Using
 As Ogar is written in Node.js, you must have Node.js and its "ws" module installed to use it. Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js and the ws module, The server will NOT run!
 
-Windows:'''
+Windows:```
 1. Download [node.js](https://nodejs.org/download/)
 2. Open CMD or Terminal (whatever OS you're running) as Administrator/root and type: npm install ws
 3. Download [VakoNoway](http://ogarproject.com/members/vakonoway.80/)'s fixed node_modules.
@@ -13,7 +13,7 @@ Windows:'''
 6. Go to your defaultgateway and forward your port to your local IP. (in Windows open CMD and type: ipconfig and look for IPv4 address)
 7. Locally connect by http://agar.io/?ip=127.0.0.1:yourport or by typing the JavaScript command: connect("ws://127.0.0.1:yourport")
 8. Others outside your network will have to connect with your external IP. They changes 127.0.0.1 with the IP you find here: http://cmyip.com/ the port is the same.
-'''
+```
 
 Linux Manual:
 ```sh

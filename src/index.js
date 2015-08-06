@@ -46,6 +46,10 @@ function parseCommands(str) {
     // Log the string
     gameServer.log.onCommand(str);
 
+	// Don't process ENTER
+	if (str === '')
+		return;
+	
     // Splits the string
     var split = str.split(" ");
 

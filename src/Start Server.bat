@@ -1,5 +1,5 @@
 @echo off
-Title Agar.io Server
+Title Ogar-Plus
 
 color 0A
 

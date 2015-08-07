@@ -6,7 +6,7 @@ var GameServer = require('./GameServer');
 var showConsole = true;
 
 // Start msg
-console.log("[Seth] HI!");
+console.log("[Ogar-Plus] HI!");
 
 // Handle arguments
 process.argv.forEach(function(val) {
@@ -61,6 +61,6 @@ function parseCommands(str) {
     if (typeof execute != 'undefined') {
         execute(gameServer,split);
     } else {
-        console.log("[Console] Invalid Command!");
+        console.log("[Ogar-Plus] Invalid Command!");
     }
 };

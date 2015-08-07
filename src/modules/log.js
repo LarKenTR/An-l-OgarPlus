@@ -50,12 +50,12 @@ Log.prototype.setup = function(gameServer) {
 
 Log.prototype.onDisconnect = function(ip) {
     // Disconnect Message
-	console.log("[Seth] Some scrub win the ip " + ip + " left!")
+	console.log("[Ogar-Plus] Some scrub win the ip " + ip + " left!")
 };
 
 Log.prototype.onConnect = function(ip) {
 	// Join Message
-	console.log("[Seth] Some scrub win the ip " + ip + " joined!")
+	console.log("[Ogar-Plus] Some scrub win the ip " + ip + " joined!")
 };
 
 Log.prototype.onCommand = function(command) {

@@ -127,15 +127,15 @@ GameServer.prototype.start = function() {
         setInterval(this.mainLoop.bind(this), 1);
 
         // Done
-        console.log("[Game] Listening on port " + this.config.serverPort);
-        console.log("[Game] Current game mode is " + this.gameMode.name);
+        console.log("[Ogar-Plus] Listening on port " + this.config.serverPort);
+        console.log("[Ogar-Plus] Current game mode is " + this.gameMode.name);
 
         // Player bots (Experimental)
         if (this.config.serverBots > 0) {
             for (var i = 0;i < this.config.serverBots;i++) {
                 this.bots.addBot();
             }
-            console.log("[Game] Loaded "+this.config.serverBots+" player bots");
+            console.log("[Ogar-Plus] Loaded "+this.config.serverBots+" player bots");
         }
 
     }.bind(this));
@@ -866,7 +866,7 @@ GameServer.prototype.loadConfig = function() {
         }
     } catch (err) {
         // No config
-        console.log("[Game] Config not found... Generating new config");
+        console.log("[Ogar-Plus] Config not found... Generating new config");
 
         // Create a new config
         fs.writeFileSync('./gameserver.ini', ini.stringify(this.config));
@@ -931,7 +931,7 @@ GameServer.prototype.startStatsServer = function(port) {
 
     this.httpServer.listen(port, function() {
         // Stats server
-        console.log("[Game] Loaded stats server on port " + port);
+        console.log("[Ogar-Plus] Loaded stats server on port " + port);
         setInterval(this.getStats.bind(this), this.config.serverStatsUpdate * 1000);
     }.bind(this));
 }

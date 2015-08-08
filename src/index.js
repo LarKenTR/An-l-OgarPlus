@@ -6,7 +6,7 @@ var GameServer = require('./GameServer');
 var showConsole = true;
 
 // Start msg
-console.log("[Ogar-Plus] HI!");
+console.log("Ogar-Plus ~ A modified Ogar Server");
 
 // Handle arguments
 process.argv.forEach(function(val) {

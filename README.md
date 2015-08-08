@@ -7,12 +7,12 @@ As Ogar is written in Node.js, you must have Node.js and its "ws" module install
 Windows:
 * Download [node.js](https://nodejs.org/download/)
 * Open CMD or Terminal (whatever OS you're running) as Administrator/root and type: npm install ws
-* Download [VakoNoway](http://ogarproject.com/members/vakonoway.80/)'s fixed node_modules.
-* Open Start.bat in /src/ or in Linux go to src/ and type: nodejs index.js (Skip if on windows, already fixed)
+* Download [VakoNoway](http://ogarproject.com/members/vakonoway.80/)'s fixed node_modules. (now included with Ogar-Plus)
+* Open Start.bat in /src/ or in Linux go to src/ and type: nodejs index.js
 * If you're running on port 443, make sure Skype is closed, otherwise choose another port by changing gameserver.ini.
 * Go to your defaultgateway and forward your port to your local IP. (in Windows open CMD and type: ipconfig and look for IPv4 address)
 * Locally connect by http://agar.io/?ip=127.0.0.1:yourport or by typing the JavaScript command: connect("ws://127.0.0.1:yourport")
-* Others outside your network will have to connect with your external IP. They changes 127.0.0.1 with the IP you find here: http://cmyip.com/ the port is the same.
+* Others outside your network will have to connect with your external IP. They will use the same port, but ip found [here](http://cmyip.com/)
 
 Linux Manual:
 ```sh
@@ -47,7 +47,7 @@ Id   | Name
 0    | Free For All
 1    | Teams
 2    | Experimental
-3    | Virus Off
+3    | Virus Off (not done!)
 10   | Tournament
 11   | Hunger Games
 12   | Zombie Mode

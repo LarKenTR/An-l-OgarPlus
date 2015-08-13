@@ -27,12 +27,12 @@ PlayerCell.prototype.visibleCheck = function(box,centerPos) {
     return (this.abs(this.position.x - centerPos.x) < lenX) && (this.abs(this.position.y - centerPos.y) < lenY);
 };
 
-PlayerCell.prototype.simpleCollide = function(check,d) {
-    // Simple collision check
-    var len = 2 * d >> 0; // Width of cell + width of the box (Int)
-
-    return (this.abs(this.position.x - check.x) < len) &&
-           (this.abs(this.position.y - check.y) < len);
+PlayerCell.prototype.simpleCollide = function(x1,y1,check,d) {
+	// Simple collision check
+	var len = d >> 0; // Width of cell + width of the box (Int)
+ 		 
+	return (this.abs(x1 - check.position.x) < len) &&
+	(this.abs(y1 - check.position.y) < len);
 };
 
 PlayerCell.prototype.calcMergeTime = function(base) {
@@ -49,7 +49,8 @@ PlayerCell.prototype.calcMove = function(x2, y2, gameServer) {
     var deltaY = y2 - this.position.y;
     var deltaX = x2 - this.position.x;
     var angle = Math.atan2(deltaX,deltaY);
-    if(isNaN(angle)) {
+    
+	if(isNaN(angle)) {
 	return;
     }
 
@@ -71,7 +72,7 @@ PlayerCell.prototype.calcMove = function(x2, y2, gameServer) {
         if ((cell.recombineTicks > 0) || (this.recombineTicks > 0)) {
             // Cannot recombine - Collision with your own cells
             var collisionDist = cell.getSize() + r; // Minimum distance between the 2 cells
-            if (this.simpleCollide(cell, collisionDist)) {
+            if (!this.simpleCollide(x1,y1,cell, collisionDist)) {
                 // Skip
                 continue;
             }

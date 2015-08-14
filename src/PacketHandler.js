@@ -6,7 +6,6 @@ function PacketHandler(gameServer, socket) {
     // Detect protocol version - we can do something about it later
     this.protocol = 0;
 
-	this.pressE = false;
     this.pressQ = false;
     this.pressW = false;
     this.pressSpace = false;
@@ -66,14 +65,10 @@ PacketHandler.prototype.handleMessage = function(message) {
             break;
         case 16:
             // Set Target
-            // Discard broken packets
-            var client = this.socket.playerTracker;
-            if (view.byteLength == 9) {
-                client.mouse.x = view.getInt16(1, true);
-                client.mouse.y = view.getInt16(3, true);
-            } else if (view.byteLength == 21) {
-                client.mouse.x = view.getFloat64(1, true);
-                client.mouse.y = view.getFloat64(9, true);
+            if (view.byteLength == 13) {
+                var client = this.socket.playerTracker;
+                client.mouse.x = view.getInt32(1, true);
+                client.mouse.y = view.getInt32(5, true);
             }
             break;
         case 17:

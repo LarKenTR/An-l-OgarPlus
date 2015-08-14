@@ -955,3 +955,4 @@ WebSocket.prototype.sendPacket = function(packet) {
         this.removeAllListeners();
     }
 };
+

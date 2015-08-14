@@ -14,6 +14,7 @@ function PlayerTracker(gameServer, socket) {
     this.score = 0; // Needed for leaderboard
 
     this.mouse = {x: 0, y: 0};
+    this.mouseCells = []; // For individual cell movement
     this.tickLeaderboard = 0; //
     this.tickViewBox = 0;
 
@@ -286,8 +287,8 @@ PlayerTracker.prototype.getSpectateNodes = function() {
         }
 
         // Get spectated player's location and calculate zoom amount
-        var specZoom = Math.sqrt(150 * specPlayer.score);
-        specZoom = Math.pow(Math.min(50 / specZoom, 1.0), 0.4) * 0.6;
+        var specZoom = Math.sqrt(100 * specPlayer.score);
+        specZoom = Math.pow(Math.min(40.5 / specZoom, 1.0), 0.4) * 0.6;
         // TODO: Send packet elsewhere so it is send more often
         this.socket.sendPacket(new Packet.UpdatePosition(specPlayer.centerPos.x, specPlayer.centerPos.y, specZoom));
         // TODO: Recalculate visible nodes for spectator to match specZoom

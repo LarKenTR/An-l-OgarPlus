@@ -49,13 +49,11 @@ Log.prototype.setup = function(gameServer) {
 };
 
 Log.prototype.onDisconnect = function(ip) {
-    // Disconnect Message
-	console.log("[Ogar-Plus] Some scrub win the ip " + ip + " left!")
+    // Nothing
 };
 
 Log.prototype.onConnect = function(ip) {
-	// Join Message
-	console.log("[Ogar-Plus] Some scrub win the ip " + ip + " joined!")
+	// Nothing
 };
 
 Log.prototype.onCommand = function(command) {

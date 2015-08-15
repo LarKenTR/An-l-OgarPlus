@@ -156,3 +156,4 @@ Teams.prototype.updateLB = function(gameServer) {
         gameServer.leaderboard[i] = teamMass[i]/total;
     }
 };
+

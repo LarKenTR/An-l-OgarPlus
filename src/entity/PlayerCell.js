@@ -15,7 +15,7 @@ PlayerCell.prototype = new Cell();
 
 PlayerCell.prototype.visibleCheck = function(box,centerPos) {
     // Use old fashioned checking method if cell is small
-    if (this.mass < 150) {
+    if (this.mass < 100) {
         return this.collisionCheck(box.bottomY,box.topY,box.rightX,box.leftX);
     }
 
@@ -28,11 +28,11 @@ PlayerCell.prototype.visibleCheck = function(box,centerPos) {
 };
 
 PlayerCell.prototype.simpleCollide = function(x1,y1,check,d) {
-	// Simple collision check
-	var len = d >> 0; // Width of cell + width of the box (Int)
- 		 
-	return (this.abs(x1 - check.position.x) < len) &&
-	(this.abs(y1 - check.position.y) < len);
+    // Simple collision check
+    var len = d >> 0; // Width of cell + width of the box (Int)
+
+    return (this.abs(x1 - check.position.x) < len) &&
+           (this.abs(y1 - check.position.y) < len);
 };
 
 PlayerCell.prototype.calcMergeTime = function(base) {
@@ -44,14 +44,14 @@ PlayerCell.prototype.calcMergeTime = function(base) {
 PlayerCell.prototype.calcMove = function(x2, y2, gameServer) {
     var config = gameServer.config;
     var r = this.getSize(); // Cell radius
-
+    
     // Get angle
     var deltaY = y2 - this.position.y;
     var deltaX = x2 - this.position.x;
     var angle = Math.atan2(deltaX,deltaY);
     
-	if(isNaN(angle)) {
-	return;
+    if(isNaN(angle)) {
+        return;
     }
 
     // Distance between mouse pointer and cell
@@ -72,7 +72,7 @@ PlayerCell.prototype.calcMove = function(x2, y2, gameServer) {
         if ((cell.recombineTicks > 0) || (this.recombineTicks > 0)) {
             // Cannot recombine - Collision with your own cells
             var collisionDist = cell.getSize() + r; // Minimum distance between the 2 cells
-            if (!this.simpleCollide(x1,y1,cell, collisionDist)) {
+            if (!this.simpleCollide(x1,y1,cell,collisionDist)) {
                 // Skip
                 continue;
             }

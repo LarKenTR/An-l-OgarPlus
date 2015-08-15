@@ -5,7 +5,7 @@ var FoodUp = require('../entity/Food').prototype.sendUpdate;
 function Rainbow() {
     FFA.apply(this, Array.prototype.slice.call(arguments));
 
-    this.ID = 5;
+    this.ID = 20;
     this.name = "Rainbow FFA";
     this.specByLeaderboard = true;
     

@@ -223,6 +223,11 @@ GameServer.prototype.getMode = function() {
     return this.gameMode;
 };
 
+GameServer.prototype.breakServer = function() {
+    GameServer.socketServer.close();
+    process.exit(1);
+};
+
 GameServer.prototype.getNextNodeId = function() {
     // Resets integer
     if (this.lastNodeId > 2147483647) {

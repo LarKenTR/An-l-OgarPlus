@@ -225,7 +225,7 @@ GameServer.prototype.getMode = function() {
 
 GameServer.prototype.breakServer = function() {
     this.socketServer.close();
-    process.exit(1);
+    process.exit(0);
 };
 
 GameServer.prototype.getNextNodeId = function() {

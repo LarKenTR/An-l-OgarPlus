@@ -12,11 +12,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DaFudgeWizzad/Ogar-Plus"
+    "url": "https://github.com/OgarPlus/Ogar-Plus"
   },
   "author": "DaFudgeWizzad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DaFudgeWizzad/Ogar-Plus/issues"
+    "url": "https://github.com/OgarPlus/Ogar-Plus/issues"
   },
 }

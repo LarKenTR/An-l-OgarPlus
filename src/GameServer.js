@@ -224,7 +224,6 @@ GameServer.prototype.getMode = function() {
 };
 
 GameServer.prototype.breakServer = function() {
-    GameServer.socketServer.close();
     process.exit(1);
 };
 

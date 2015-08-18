@@ -40,7 +40,7 @@ VO.prototype.pressW = function(gameServer,player) {
     // Called when the W key is pressed
     var client = player;
 for (var i = 0; i < client.cells.length; i++) {
-        var cell = client.cells[i];
+    var cell = client.cells[i];
 
         if (!cell) {
             continue;
@@ -72,7 +72,7 @@ for (var i = 0; i < client.cells.length; i++) {
         ejected.setMoveEngineData(160, 20);
 
         gameServer.setAsMovingNode(ejected);
-		gameServer.shootVirus(ejected)
+	gameServer.shootVirus(ejected)
 };
 };
 

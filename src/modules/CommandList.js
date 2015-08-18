@@ -26,10 +26,10 @@ var fillChar = function (data, char, fieldLength, rTL) {
 // Commands
 
 Commands.list = { 
-	help: function(gameServer,split) {
+    help: function(gameServer,split) {
         console.log("========================== HELP ============================");
         console.log("[Ogar-Plus] addbot     : add one bot to the server");
-		console.log("[Ogar-Plus] addbots    : add more than one bot to the server");
+	console.log("[Ogar-Plus] addbots    : add more than one bot to the server");
         console.log("[Ogar-Plus] board      : set scoreboard text");
         console.log("[Ogar-Plus] boardreset : reset scoreboard text");
         console.log("[Ogar-Plus] change     : change specified settings");
@@ -42,7 +42,7 @@ Commands.list = {
         console.log("[Ogar-Plus] kill       : kill cell(s) by client ID");
         console.log("[Ogar-Plus] killall    : kill everyone");
         console.log("[Ogar-Plus] mass       : set cell(s) mass by client ID");
-		console.log("[Ogar-Plus] merge	   : force a player to merge");
+	console.log("[Ogar-Plus] merge	   : force a player to merge");
         console.log("[Ogar-Plus] name       : change cell(s) name by client ID");
         console.log("[Ogar-Plus] playerlist : get list of players and bots");
         console.log("[Ogar-Plus] pause      : pause game , freeze all cells");
@@ -74,7 +74,7 @@ Commands.list = {
             }
         }
     },
-	addbot: function(gameServer,split) {
+    addbot: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
             add = 10; // Adds 1 bot if user doesnt specify a number
@@ -85,7 +85,7 @@ Commands.list = {
         }
         console.log("[Ogar-Plus] Added "+add+" player bots");
     },
-	addbots: function(gameServer,split) {
+    addbots: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
             add = 1; // Adds 1 bot if user doesnt specify a number

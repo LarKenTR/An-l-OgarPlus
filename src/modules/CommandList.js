@@ -51,7 +51,7 @@ Commands.list = {
         console.log("[Ogar-Plus] tp         : teleport player to specified location");
         console.log("[Ogar-Plus] virus      : spawn virus at a specified Location");
         console.log("[Ogar-Plus] ping       : checks your ping")
-		console.log("============================================================");
+	console.log("============================================================");
     },
     merge: function(gameServer,split) {
 		// Validation checks

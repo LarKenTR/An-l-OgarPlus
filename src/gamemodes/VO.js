@@ -71,9 +71,9 @@ for (var i = 0; i < client.cells.length; i++) {
         ejected.setAngle(angle);
         ejected.setMoveEngineData(160, 20);
 
-        gameServer.setAsMovingNode(ejected);
-	gameServer.shootVirus(ejected)
-};
+        //Shoot Virus
+	    gameServer.ejectVirus(ejected)
+    }
 };
 
 VO.prototype.pressSpace = function(gameServer,player) {

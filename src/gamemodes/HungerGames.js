@@ -165,5 +165,3 @@ HungerGames.prototype.onPlayerSpawn = function(gameServer,player) {
         }
     }
 };
-
-

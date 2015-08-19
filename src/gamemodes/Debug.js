@@ -52,10 +52,14 @@ Debug.prototype.getDist = function(cell,check) {
 
 // Override
 
+Debug.prototype.pressSpace = function(gameServer,player) {
+    // Called when the Space key is pressed
+    console.log("Someone Split");
+};
+
 Debug.prototype.pressW = function(gameServer,player) {
-    // Called when the Q key is pressed
-    console.log("Test:");
+    // Called when the W key is pressed
+    console.log("Someone pressed W");
     this.testPath(gameServer,player);
     player.socket.sendPacket(new Packet.DrawLine(player.mouse.x,player.mouse.y));
 };
-

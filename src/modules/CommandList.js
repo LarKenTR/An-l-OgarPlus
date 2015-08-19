@@ -77,7 +77,7 @@ Commands.list = {
     addbot: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
-            add = 10; // Adds 1 bot if user doesnt specify a number
+            add = 1; // Adds 1 bot if user doesnt specify a number
         }
 
         for (var i = 0; i < add; i++) {
@@ -88,7 +88,7 @@ Commands.list = {
     addbots: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
-            add = 1; // Adds 1 bot if user doesnt specify a number
+            add = 10; // Adds 1 bot if user doesnt specify a number
         }
 
         for (var i = 0; i < add; i++) {
@@ -171,7 +171,7 @@ Commands.list = {
         process.exit(1);
 		window.close();
 	},	
-    food: function(gameServer,split) {
+    food: function(gameServer,split,mass,pos) {
         var pos = {x: parseInt(split[1]), y: parseInt(split[2])};
         var mass = parseInt(split[3]);
 

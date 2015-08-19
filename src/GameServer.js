@@ -1,5 +1,5 @@
 // Library imports
-var WebSocket = require('ws');
+var WebSocket = require('../node_modules/ws');
 var http = require('http');
 var fs = require("fs");
 var ini = require('./modules/ini.js');
@@ -675,6 +675,21 @@ GameServer.prototype.shootVirus = function(parent) {
     };
 
     var newVirus = new Entity.Virus(this.getNextNodeId(), null, parentPos, this.config.virusStartMass);
+    newVirus.setAngle(parent.getAngle());
+    newVirus.setMoveEngineData(200, 20);
+
+    // Add to moving cells list
+    this.addNode(newVirus);
+    this.setAsMovingNode(newVirus);
+};
+
+GameServer.prototype.ejectVirus = function(parent) {
+    var parentPos = {
+        x: parent.position.x,
+        y: parent.position.y,
+    };
+
+    var newVirus = new Entity.Virus(this.getNextNodeId(), null, parentPos, this.config.ejectMass);
     newVirus.setAngle(parent.getAngle());
     newVirus.setMoveEngineData(200, 20);
 

@@ -4,6 +4,7 @@ module.exports = {
     Teams: require('./Teams'),
     Experimental: require('./Experimental'),
 	VO: require('./VO'),
+    TVO: require('./TVO'),
     Tournament: require('./Tournament'),
     HungerGames: require('./HungerGames'),
 	Rainbow: require('./Rainbow'),
@@ -24,6 +25,9 @@ var get = function(id) {
             break;
 		case 3: // Virus Off
             mode = new module.exports.VO();
+            break;
+        case 4: // Team Virus Off
+            mode = new module.exports.TVO();
             break;
         case 10: // Tournament
             mode = new module.exports.Tournament();

@@ -7,9 +7,9 @@ function Tournament() {
     this.name = "Tournament";
     this.packetLB = 48;
 
-    // Config (1 tick = 1000 ms)
-    this.prepTime = 5; // Amount of ticks after the server fills up to wait until starting the game
-    this.endTime = 15; // Amount of ticks after someone wins to restart the game
+    // Config (1 tick = second)
+    this.prepTime = 5; // Amount of seconds after the server fills up to wait until starting the game
+    this.endTime = 15; // Amount of seconds after someone wins to restart the game
     this.autoFill = false;
     this.autoFillPlayers = 1;
     this.dcTime = 0;

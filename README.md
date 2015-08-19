@@ -5,13 +5,11 @@ Build Status : [![Build Status](https://travis-ci.org/OgarPlus/Ogar-Plus.svg?bra
 Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://ogarproject.com) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
 
 ## Obtaining and Using
-As Ogar is written in Node.js, you must have Node.js and its "ws" module installed to use it. Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js and the ws module, The server will NOT run!
+Install [Node.js](https://nodejs.org/) (the ws modules are now included with Ogar-Plus). Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js, The server will NOT run!
 
 Windows:
 * Download [node.js](https://nodejs.org/download/)
-* Open CMD or Terminal (whatever OS you're running) as Administrator/root and type: npm install ws
-* Download [VakoNoway](http://ogarproject.com/members/vakonoway.80/)'s fixed node_modules. (now included with Ogar-Plus)
-* Open Start.bat in /src/ or in Linux go to src/ and type: nodejs index.js
+* Open Start.bat in /src
 * If you're running on port 443, make sure Skype is closed, otherwise choose another port by changing gameserver.ini.
 * Go to your defaultgateway and forward your port to your local IP. (in Windows open CMD and type: ipconfig and look for IPv4 address)
 * Locally connect by http://agar.io/?ip=127.0.0.1:yourport or by typing the JavaScript command: connect("ws://127.0.0.1:yourport")
@@ -30,7 +28,7 @@ Using the Linux install script:
 ```
 Using ```sudo -u ogar -H /bin/sh -c "cd; /bin/node src/index.js" ``` to launch the server increases security by running the process as an unprivileged, dedicated user with a limited shell and it is recommended to do so.
 
-Currently, Ogar listens on the following addresses and ports:
+Currently, Ogar-Plus listens on the following addresses and ports:
 * *:80 - for the master server
 * *:443 - for the game server
 
@@ -39,10 +37,10 @@ Please note that on some systems, you may have to run the process as root or oth
 Once the game server is running, you can connect (locally) by typing `agar.io/?ip=127.0.0.1:PORT` into your browser's address bar, or javascript:connect("ws://IP:PORT","") if you have issues or want the old system back.
 
 ## Configuring Ogar
-Use "gameserver.ini" to modify Ogar's configurations.
+Use "gameserver.ini" to modify configurations.
 
 ## Custom Game modes
-Ogar has support for custom gamemodes. To switch between game modes, change the value of "serverGamemode" in the configurations file to the selected game mode id and restart the server. The current gamemodes are:
+Ogar-Plus has support for custom gamemodes. To switch between game modes, change the value of "serverGamemode" in the configurations file to the selected game mode id and restart the server. There is a guide in the Gamemodes folder that teaches you how to make them. The current gamemodes are:
 GAMEMODES
 
 Id   | Name
@@ -108,4 +106,4 @@ The current available console commands are listed here. Command names are not ca
    * Spawns a virus cell at those coordinates. If a mass value is not specified, then the server will default to "virusStartMass" in the config.
 
 ## License
-Please see [this link](https://github.com/DaFudgeWizzad/Ogar-Plus/blob/master/LICENSE.md)
+Please see [this link](https://github.com/OgarPlus/Ogar-Plus/blob/master/LICENSE.md)

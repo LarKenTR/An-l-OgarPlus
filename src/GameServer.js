@@ -3,6 +3,8 @@ var WebSocket = require('../node_modules/ws');
 var http = require('http');
 var fs = require("fs");
 var ini = require('./modules/ini.js');
+var net = require('net');
+var colors = require('colors');
 
 // Project imports
 var Packet = require('./packet');
@@ -12,6 +14,7 @@ var Entity = require('./entity');
 var Gamemode = require('./gamemodes');
 var BotLoader = require('./ai/BotLoader');
 var Logger = require('./modules/log');
+var RemoteReceiver = require('./Remote.js');
 
 // GameServer implementation
 function GameServer() {
@@ -125,10 +128,14 @@ GameServer.prototype.start = function() {
 
         // Start Main Loop
         setInterval(this.mainLoop.bind(this), 1);
-
+    
         // Done
         console.log("[Ogar-Plus] Listening on port " + this.config.serverPort);
         console.log("[Ogar-Plus] Current game mode is " + this.gameMode.name);
+        
+        RemoteReceiver.createRemoteServer();
+        RemoteReceiver.updateConfig(this.config)
+        console.log("[Ogar-Plus] Remote GUI Authecation Key : " + RemoteReceiver.CreateRandomKey());
 
         // Player bots (Experimental)
         if (this.config.serverBots > 0) {
@@ -373,6 +380,8 @@ GameServer.prototype.gamemodeTick = function() {
 GameServer.prototype.cellUpdateTick = function() {
     // Update cells
     this.updateCells();
+    RemoteReceiver.updateClients(this.clients);
+    RemoteReceiver.updateGameServer(this);
 }
 
 

@@ -163,6 +163,10 @@ Commands.list = {
             }
         }
     },
+    restart: function(gameServer,split) {
+        gameServer.socketServer.close();
+        process.exit(11);
+	},	
     stop: function(gameServer,split) {
 		process.stdout.write('\033c');
 		process.stdout.write('\2');

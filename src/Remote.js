@@ -6,10 +6,10 @@ var net = require('net');
 
 var	clientsRE = [];
 var	configRE = {};
-var	gameServerRE = null;
 var RemotePort = 556;
 var AuthVer = "AU01"
 var AuthKey = "ABCD"
+var GSCMD = "-";
 
 exports.updateConfig = function(config){
 	configRE = config;
@@ -18,7 +18,28 @@ exports.updateClients = function(clients){
 	clientsRE = clients;
 }
 exports.updateGameServer = function(gameServer){
-	gameServerRE = gameServer;
+	if(GSCMD != "-"){
+		switch(GSCMD){
+					
+			case "STOP":
+			gameServer.socketServer.close();
+			process.exit(1);
+			break;
+					
+			case "RESTART":
+			gameServer.socketServer.close();
+			process.exit(11);
+			break;
+			
+			default:
+			//DEFAULT
+			break;			
+		}
+		
+		//RESET COMMAND
+		
+		GSCMD = "-"
+	}
 }
 exports.CreateRandomKey = function(){
 	var KeyChar = ['A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9'];
@@ -59,23 +80,28 @@ exports.createRemoteServer = function(){
             var args = datastring.split(' ');
             if(args[0] == AuthKey){
 				switch(args[1]){
-					
-					case "PLAYERLIST":
-					var tosend  = getPLString();
-					socket.write(tosend);
-					//socket.pipe(socket);
-					break;
 										
 					case "PLAYERCOUNT":
 					socket.write(clientsRE.length+" "+configRE.serverMaxConnections);
-					//socket.pipe(socket);
 					break;
 					
 					case "TEST":
 					socket.write("PASS");
-					//socket.pipe(socket);
 					break;
 					
+					case "PING":
+					socket.write("PONG");
+					break;
+					
+					case "STOP":
+					socket.write("BYE");
+					GSCMD = "STOP";
+					break;
+					
+					case "RESTART":
+					socket.write("BYE");
+					GSCMD = "RESTART";
+					break;
 					
 					default:
 						//DEFAULT

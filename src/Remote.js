@@ -10,7 +10,14 @@ var RemotePort = 556;
 var AuthVer = "AU01"
 var AuthKey = "ABCD"
 var GSCMD = "-";
-
+var GSARG = "-";
+var REAUTH = false;
+exports.Initreauth = function(Timer){
+	REAUTH = true;
+	setTimeout(function () {
+		REAUTH = false;
+	}, Timer)
+}
 exports.updateConfig = function(config){
 	configRE = config;
 }
@@ -29,6 +36,14 @@ exports.updateGameServer = function(gameServer){
 			case "RESTART":
 			gameServer.socketServer.close();
 			process.exit(11);
+			break;
+			
+			//parseInt("12345")
+			
+			
+			case "GAMEMODE":
+			var execute = gameServer.commands['gamemode'];
+			execute(gameServer,GSARG.split(' '));
 			break;
 			
 			default:
@@ -88,11 +103,7 @@ exports.createRemoteServer = function(){
 					case "TEST":
 					socket.write("PASS");
 					break;
-					
-					case "PING":
-					socket.write("PONG");
-					break;
-					
+										
 					case "STOP":
 					socket.write("BYE");
 					GSCMD = "STOP";
@@ -103,10 +114,22 @@ exports.createRemoteServer = function(){
 					GSCMD = "RESTART";
 					break;
 					
+					case "GAMEMODE":
+					socket.write("EXEC");
+					GSCMD = "GAMEMODE";
+					GSARG = "N " + args[2];
+					break;
+					
 					default:
 						//DEFAULT
 					break;					
 				}    
+			}
+            else if(args[0] == "REAUTH"){
+				if(REAUTH == true){
+					REAUTH = false;
+					socket.write(AuthKey);
+				}
 			}
 			else{
 				socket.write("INVALIDKEY");

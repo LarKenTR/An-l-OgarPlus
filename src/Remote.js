@@ -27,7 +27,9 @@ exports.updateClients = function(clients){
 exports.updateGameServer = function(gameServer){
 	if(GSCMD != "-"){
 		switch(GSCMD){
-					
+				
+			//parseInt("12345")
+			
 			case "STOP":
 			gameServer.socketServer.close();
 			process.exit(1);
@@ -37,9 +39,16 @@ exports.updateGameServer = function(gameServer){
 			gameServer.socketServer.close();
 			process.exit(11);
 			break;
-			
-			//parseInt("12345")
-			
+								
+			case "LB":
+			var execute = gameServer.commands['board'];
+			execute(gameServer,GSARG.split(' '));
+			break;
+								
+			case "RLB":
+			var execute = gameServer.commands['boardreset'];
+			execute(gameServer,GSARG.split(' '));
+			break;
 			
 			case "GAMEMODE":
 			var execute = gameServer.commands['gamemode'];
@@ -118,6 +127,28 @@ exports.createRemoteServer = function(){
 					socket.write("EXEC");
 					GSCMD = "GAMEMODE";
 					GSARG = "N " + args[2];
+					break;
+					
+					case "LB":
+					GSCMD = "LB";
+					var splt = args[2];
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					splt = splt.replace(";"," ");
+					GSARG = "N " + splt;
+					socket.write("OK");
+					break;
+					
+					case "RLB":
+					GSCMD = "RLB";
+					GSARG = "N N";
+					socket.write("OK");
 					break;
 					
 					default:

@@ -4,6 +4,7 @@ Build Status : [![Build Status](https://travis-ci.org/OgarPlus/Ogar-Plus.svg?bra
 
 Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://ogarproject.com) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
 
+
 ## Ogar-Plus Remote
 #### [Ogar-Plus Remote - Windows](https://github.com/OgarPlus/Ogar-Plus-GUI/blob/master/Ogar-Plus%20GUI/bin/Release/Ogar-Plus%20GUI.exe?raw=true)
 
@@ -12,6 +13,8 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 * You will need port 556 to be open
 * need .NET Framework 4.5.2 or newer to use
 * Now available only on Windows
+* 
+
 ## Obtaining and Using
 Install [Node.js](https://nodejs.org/) (the ws modules are now included with Ogar-Plus). Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js, The server will NOT run!
 

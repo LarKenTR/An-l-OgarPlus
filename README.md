@@ -8,6 +8,7 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 #### [Ogar-Plus Remote - Windows](https://github.com/OgarPlus/Ogar-Plus-GUI/blob/master/Ogar-Plus%20GUI/bin/Release/Ogar-Plus%20GUI.exe?raw=true)
 
 
+* control your Ogar-Plus server remotely
 * You will need port 556 to be open
 * need .NET Framework 4.5.2 or newer to use
 * Now available only on Windows

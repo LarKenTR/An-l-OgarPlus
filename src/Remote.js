@@ -49,6 +49,11 @@ exports.updateGameServer = function(gameServer){
 			var execute = gameServer.commands['boardreset'];
 			execute(gameServer,GSARG.split(' '));
 			break;
+								
+			case "KILLALL":
+			var execute = gameServer.commands['killall'];
+			execute(gameServer,GSARG.split(' '));
+			break;
 			
 			case "GAMEMODE":
 			var execute = gameServer.commands['gamemode'];
@@ -121,6 +126,11 @@ exports.createRemoteServer = function(){
 					case "RESTART":
 					socket.write("BYE");
 					GSCMD = "RESTART";
+					break;
+					
+					case "KILLALL":
+					socket.write("EXEC");
+					GSCMD = "KILLALL";
 					break;
 					
 					case "GAMEMODE":

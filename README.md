@@ -4,14 +4,24 @@ Build Status : [![Build Status](https://travis-ci.org/OgarPlus/Ogar-Plus.svg?bra
 
 Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://ogarproject.com) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
 
+## Slow Progression
+I don't have that much time for this project anymore unfortunately. I will still update occasionally, but the rest will be from Porama. He is not required to update, but can when he chooses. In my opinion, Ogar is semi-broken until Ogar 2.
+#### Problems/Glitches that I have found:
+* Have to be bigger than your pieces to merge
+* Small food eats players on occasion
+* Switching gamemodes is poorly coded
+* Splitting mechanics are cheap
+* Bot pathing = Headless Chicken
+
+I know this project is made by a small team and such, but the development has come to almost a complete stop since Ogar 2's announcement. I would fix the problems myself, as this is a modified copy, but as mentioned before I don't have much time.
 
 ## Ogar-Plus Remote
 #### [Ogar-Plus Remote - Windows](https://github.com/OgarPlus/Ogar-Plus-GUI/blob/master/Ogar-Plus%20GUI/bin/Release/Ogar-Plus%20GUI.exe?raw=true)
 
 
-* control your Ogar-Plus server remotely
+* Control your Ogar-Plus server remotely
 * You will need port 556 to be open
-* need .NET Framework 4.5.2 or newer to use
+* Need .NET Framework 4.5.2 or newer to use
 * Now available only on Windows
 
 ## Obtaining and Using

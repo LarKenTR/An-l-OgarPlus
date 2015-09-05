@@ -60,6 +60,11 @@ exports.updateGameServer = function(gameServer){
 			execute(gameServer,GSARG.split(' '));
 			break;
 			
+			case "PAUSE":
+			var execute = gameServer.commands['pause'];
+			execute(gameServer,GSARG.split(' '));
+			break;
+			
 			default:
 			//DEFAULT
 			break;			
@@ -159,6 +164,11 @@ exports.createRemoteServer = function(){
 					GSCMD = "RLB";
 					GSARG = "N N";
 					socket.write("OK");
+					break;
+					
+					case "PAUSE":
+					socket.write("EXEC");
+					GSCMD = "PAUSE";
 					break;
 					
 					default:

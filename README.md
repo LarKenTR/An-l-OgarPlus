@@ -23,6 +23,7 @@ I know this project is made by a small team and such, but the development has co
 * You will need port 556 to be open
 * Need .NET Framework 4.5.2 or newer to use
 * Now available only on Windows
+* [Click me to see how to use it](https://github.com/OgarPlus/Ogar-Plus/wiki/How-to-use-'OgarPlus-Remote')
 
 ## Obtaining and Using
 Install [Node.js](https://nodejs.org/) (the ws modules are now included with Ogar-Plus). Only use this version if you want to use the source. (for editing and modifying ogar to your liking) If you don't have Node.js, The server will NOT run!

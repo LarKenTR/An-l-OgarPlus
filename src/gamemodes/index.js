@@ -11,7 +11,8 @@ module.exports = {
     Debug: require('./Debug'),
     Zombie: require('./Zombie'),
     TeamZ: require('./TeamZ.js'),
-    TeamX: require('./TeamX.js')
+    TeamX: require('./TeamX.js'),
+    FFATime: require('./FFATime.js')
 };
 
 var get = function(id) {
@@ -43,6 +44,9 @@ var get = function(id) {
             break;
         case 14: // Experimental Team
             mode = new module.exports.TeamX();
+            break;
+        case 15: // FFA Time
+            mode = new module.exports.FFATime();
             break;
         case 20: // Rainbow
             mode = new module.exports.Rainbow();

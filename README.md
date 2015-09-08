@@ -16,7 +16,7 @@ I don't have that much time for this project anymore unfortunately. I will still
 I know this project is made by a small team and such, but the development has come to almost a complete stop since Ogar 2's announcement. I would fix the problems myself, as this is a modified copy, but as mentioned before I don't have much time.
 
 
-## Ogar-Plus Download
+## Ogar-Plus Binary Download
 
 
 #### [Ogar-Plus - Windows](https://github.com/OgarPlus/Ogar-Plus/blob/master/binary/OgarPlus.exe?raw=true)

@@ -3,7 +3,7 @@ module.exports = {
     FFA: require('./FFA'),
     Teams: require('./Teams'),
     Experimental: require('./Experimental'),
-	VO: require('./VO'),
+	VirusOff: require('./VirusOff'),
     TVO: require('./TVO'),
     Tournament: require('./Tournament'),
     HungerGames: require('./HungerGames'),
@@ -25,7 +25,7 @@ var get = function(id) {
             mode = new module.exports.Experimental();
             break;
 		case 3: // Virus Off
-            mode = new module.exports.VO();
+            mode = new module.exports.VirusOff();
             break;
         case 4: // Team Virus Off
             mode = new module.exports.TVO();

@@ -82,6 +82,8 @@ Id   | Name
 12   | Zombie Mode
 13   | Team Z
 14   | Team X
+15   | FFA Time Limited (BETA)
+16   | Leap (BETA)
 20   | Rainbow FFA
 21   | Debug
 

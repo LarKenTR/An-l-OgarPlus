@@ -12,7 +12,8 @@ module.exports = {
     Zombie: require('./Zombie'),
     TeamZ: require('./TeamZ.js'),
     TeamX: require('./TeamX.js'),
-    FFATime: require('./FFATime.js')
+    FFATime: require('./FFATime.js'),
+    Leap: require('./Leap.js')
 };
 
 var get = function(id) {
@@ -47,6 +48,9 @@ var get = function(id) {
             break;
         case 15: // FFA Time
             mode = new module.exports.FFATime();
+            break;
+        case 16: // FFA Time
+            mode = new module.exports.Leap();
             break;
         case 20: // Rainbow
             mode = new module.exports.Rainbow();

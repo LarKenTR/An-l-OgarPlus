@@ -57,8 +57,9 @@ Using the Linux install script:
 Using ```sudo -u ogar -H /bin/sh -c "cd; /bin/node src/index.js" ``` to launch the server increases security by running the process as an unprivileged, dedicated user with a limited shell and it is recommended to do so.
 
 Currently, Ogar-Plus listens on the following addresses and ports:
-* *:80 - for the master server
+* *:88 - for the stats server
 * *:443 - for the game server
+* *:556 - for the GUI server
 
 Please note that on some systems, you may have to run the process as root or otherwise elevate your privileges to allow the process to listen on the needed ports. **If you are getting an EADDRINUSE error, it means that the port required to run Ogar is being used. Usually, Skype is the culprit. To solve this, either close out skype, or change the serverPort value in gameserver.ini to a different port. You will have to change your connection ip to "127.0.0.1:PORT"**
 

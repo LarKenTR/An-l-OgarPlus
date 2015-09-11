@@ -18,10 +18,10 @@ Leap.prototype = new FFA(); // Change if you want to use a different Base gamemo
 
 
 Leap.prototype.pressSpace = function(gameServer,player) {
-     var len = client.cells.length;
+     var len = player.cells.length;
     for (var i = 0; i < len; i++) {
 		
-        var cell = client.cells[i];
+        var cell = player.cells[i];
         if (!cell) {
             continue;
         }
@@ -31,8 +31,8 @@ Leap.prototype.pressSpace = function(gameServer,player) {
         }
 		
         // Get angle
-        var deltaY = client.mouse.y - cell.position.y;
-        var deltaX = client.mouse.x - cell.position.x;
+        var deltaY = player.mouse.y - cell.position.y;
+        var deltaX = player.mouse.x - cell.position.x;
         var angle = Math.atan2(deltaX,deltaY);
 
         // Get starting position
@@ -46,7 +46,7 @@ Leap.prototype.pressSpace = function(gameServer,player) {
         var newMass = (cell.mass / 10) * 7;
         cell.mass = newMass;
         // Let's go
-        var split = new Entity.PlayerCell(gameServer.getNextNodeId(), client, startPos, newMass);
+        var split = new Entity.PlayerCell(gameServer.getNextNodeId(), player, startPos, newMass);
         split.setAngle(angle);
         split.setMoveEngineData(splitSpeed, 32, 0.85); 
         split.calcMergeTime(gameServer.config.playerRecombineTime);

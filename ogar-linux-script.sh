@@ -5,11 +5,11 @@ download_and_extract () {
 if [ ! -d Ogar-master ]; then
 	if [ ! -f master.tar.gz ]; then
 			echo "No local master.tar.gz found, downloading with curl."
-			curl -O -L https://github.com/forairan/Ogar/archive/master.tar.gz
+			curl -O -L https://github.com/OgarPlus/Ogar-Plus/archive/master.tar.gz
 	fi
 	if [ ! -f master.tar.gz ]; then
 		echo "curl failed to download master.tar.gz, trying wget."
-		wget https://github.com/forairan/Ogar/archive/master.tar.gz
+		wget https://github.com/OgarPlus/Ogar-Plus/archive/master.tar.gz
 			if [ ! -f master.tar.gz ]; then
 					echo "wget failed as well. Aborting!"
 					exit 1
@@ -23,8 +23,8 @@ if [ ! -d Ogar-master ]; then
 	echo "Entering temporary directory."
 	cd /tmp || exit 1
 	echo "Organising and cleaning up the extracted files."
-	rm Ogar-master/src/Start.bat
-	rm Ogar-master/.gitignore
+	rm Ogar-Plus-master/src/Start.bat
+	rm Ogar-Plus-master/.gitignore
 fi
 }
 
@@ -78,9 +78,9 @@ if grep "Arch Linux" /etc/*-release > /dev/null; then
 fi
 download_and_extract
 echo "Copying the generated ogar folder to $2."
-cp -RTf Ogar-master "$2"/ogar
+cp -RTf Ogar-Plus-master "$2"/ogar
 echo "Removing temporary files"
-rm -R Ogar-master
+rm -R Ogar-Plus-master
 
 echo "Creating ogar user and group if they don't exist"
 if ! getent group "ogar" >/dev/null; then
@@ -138,7 +138,7 @@ echo "Do you wish to install a fresh gamserver.ini? (Y/N)"
 read -r yn
 case $yn in
 		[Yy]* ) ;;
-		 * ) rm Ogar-master/gameserver.ini;;
+		 * ) rm Ogar-Plus-master/gameserver.ini;;
 esac
 echo "Copying the generated ogar folder to $2."
 cp -RTf Ogar-master "$2"/ogar

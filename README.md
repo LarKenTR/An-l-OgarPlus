@@ -7,13 +7,13 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 
 
 ## We working on
-#### WORKING
+##### WORKING
 
 
 * Leap : Fix spacebar problem 
 
 
-#### SOON
+##### SOON
 
 
 * FFATime : display time on scoreboard

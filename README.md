@@ -4,6 +4,15 @@ Build Status : [![Build Status](https://travis-ci.org/OgarPlus/Ogar-Plus.svg?bra
 
 Copy of ogar that I heavily modified, and will continue to update. The [OgarProject](https://ogarproject.com) owns Ogar, and I do not claim it as mine! Original Ogar found [here](https://github.com/OgarProject/Ogar)
 
+
+
+## We working on
+* [SOON] FFATime : display time on scoreboard
+* [SOON] FFATime : set how long to you want
+* [WORKING] Leap : Fix spacebar problem 
+* [SOON] More Gamemode...
+
+
 ## Slow Progression
 I don't have that much time for this project anymore unfortunately. I will still update occasionally, but the rest will be from Porama. He is not required to update, but can when he chooses. In my opinion, Ogar is semi-broken until Ogar 2.
 #### Problems/Glitches that I have found:

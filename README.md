@@ -7,10 +7,18 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 
 
 ## We working on
-* [SOON] FFATime : display time on scoreboard
-* [SOON] FFATime : set how long to you want
-* [WORKING] Leap : Fix spacebar problem 
-* [SOON] More Gamemode...
+#### WORKING
+
+
+* Leap : Fix spacebar problem 
+
+
+#### SOON
+
+
+* FFATime : display time on scoreboard
+* FFATime : set how long to you want
+* More Gamemode...
 
 
 ## Slow Progression

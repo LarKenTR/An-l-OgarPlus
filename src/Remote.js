@@ -64,6 +64,10 @@ exports.updateGameServer = function(gameServer){
 			var execute = gameServer.commands['pause'];
 			execute(gameServer,GSARG.split(' '));
 			break;
+								
+			case "ADDBOT":
+			var execute = gameServer.commands['addbot'];
+			execute(gameServer,GSARG.split(' '));
 			
 			default:
 			//DEFAULT
@@ -169,6 +173,12 @@ exports.createRemoteServer = function(){
 					case "PAUSE":
 					socket.write("EXEC");
 					GSCMD = "PAUSE";
+					break;
+					
+					case "ADDBOT":
+					socket.write("EXEC");
+					GSCMD = "ADDBOT";
+					GSARG = "N " + args[2];
 					break;
 					
 					default:

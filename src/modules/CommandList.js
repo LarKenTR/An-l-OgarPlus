@@ -2,6 +2,7 @@
 // Imports
 var GameMode = require('../gamemodes');
 var Entity = require('../entity');
+var colors = require('colors/safe')
 
 function Commands() {
     this.list = { }; // Empty
@@ -75,10 +76,7 @@ Commands.list = {
         }
     },
     addbot: function(gameServer,split) {
-        var add = parseInt(split[1]);
-        if (isNaN(add)) {
-            add = 1; // Adds 1 bot if user doesnt specify a number
-        }
+        var add = 1; // Adds 1 bot
 
         for (var i = 0; i < add; i++) {
             gameServer.bots.addBot();
@@ -88,7 +86,7 @@ Commands.list = {
     addbots: function(gameServer,split) {
         var add = parseInt(split[1]);
         if (isNaN(add)) {
-            add = 10; // Adds 1 bot if user doesnt specify a number
+            add = 10; // Adds 10 bots if user doesnt specify a number
         }
 
         for (var i = 0; i < add; i++) {
@@ -168,9 +166,7 @@ Commands.list = {
         process.exit(11);
 	},	
     stop: function(gameServer,split) {
-		process.stdout.write('\033c');
-		process.stdout.write('\2');
-		console.log("Bye!\2");
+        //process.stdout.write('\033c');
         gameServer.socketServer.close();
         process.exit(1);
 		window.close();
@@ -312,7 +308,7 @@ Commands.list = {
         }
 
         // Error
-        console.log("[Ogar-Plus] Player "+id+" was not found");
+        console.log('[Error] Player '.red +id+' was not found'.red );
     },
     playerlist: function(gameServer,split) {
         console.log("[Ogar-Plus] Showing " + gameServer.clients.length + " players: ");

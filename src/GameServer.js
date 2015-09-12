@@ -1,5 +1,5 @@
 // Library imports
-var WebSocket = require('../node_modules/ws');
+var WebSocket = require('../node_modules/ws/index.js');
 var http = require('http');
 var fs = require("fs");
 var ini = require('./modules/ini.js');
@@ -154,16 +154,17 @@ GameServer.prototype.start = function() {
     this.socketServer.on('error', function err(e) {
         switch (e.code) {
             case "EADDRINUSE": 
-                console.log("[Error] Server could not bind to port! Please close out of Skype or change 'serverPort' in gameserver.ini to a different number.");
+                var colors = require('colors/safe');
+                console.log('[Error] Server could not bind to port! Please close out of Skype or change serverPort in gameserver.ini to a different number.'.red);
                 break;
             case "EACCES": 
-                console.log("[Error] Please make sure you are running Ogar with root privileges.");
+                console.log('[Error] Please make sure you are running Ogar with root privileges.'.red);
                 break;
             default:
-                console.log("[Error] Unhandled error code: "+e.code);
+                console.log('[Error] Unhandled error code: '.red +e.code);
                 break;
         }
-        process.exit(1); // Exits the program
+        process.exit(2); // Exits the program
     });
 
     function connectionEstablished(ws) {

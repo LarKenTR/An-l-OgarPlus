@@ -96,7 +96,7 @@ exports.GSExecute = function(gameServer){
 			break;
 								
 			case "ADDBOT":
-			var execute = gameServer.commands['addbot'];
+			var execute = gameServer.commands['addbots'];
 			execute(gameServer,GSARG.split(' '));
 			
 			default:

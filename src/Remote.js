@@ -12,6 +12,8 @@ var AuthKey = "ABCD"
 var GSCMD = "-";
 var GSARG = "-";
 var REAUTH = false;
+var SVinfo = "";
+var border;
 exports.Initreauth = function(Timer){
 	REAUTH = true;
 	setTimeout(function () {
@@ -25,6 +27,34 @@ exports.updateClients = function(clients){
 	clientsRE = clients;
 }
 exports.updateGameServer = function(gameServer){
+	this.UpdatePlayers(gameServer);
+	this.GSExecute(gameServer);
+	
+}
+//Update function
+exports.UpdatePlayers = function(gameServer){
+	//Update Player
+	SVinfo = gameServer.gameMode.name + ";";
+	SVinfo = SVinfo + process.memoryUsage().heapUsed/1000000 + ";";
+	SVinfo = SVinfo + gameServer.clients.length + ";";
+	//try{
+		for (var i = 0; i < gameServer.clients.length; i++) {
+			var client = gameServer.clients[i].playerTracker;
+			SVinfo = SVinfo + client.pID + ";";
+			SVinfo = SVinfo + (client.name == "" ? "An unnamed cell" : client.name) + ";";
+			SVinfo = SVinfo + (client.spectate ? false : (client.cells.length > 0 ? true : false)) + ";";
+			SVinfo = SVinfo + (typeof gameServer.clients[i].remoteAddress != 'undefined' ? gameServer.clients[i].remoteAddress : "BOT") + ";";
+			SVinfo = SVinfo + client.getScore(true) + ";";
+			SVinfo = SVinfo + client.centerPos.x + ";" + client.centerPos.y + ";";
+			//SVinfo = SVinfo + client.getColor().red + ";" + client.getColor().green + ";" + client.getColor().blue + ";";
+			SVinfo = SVinfo + (client.spectate ? "0;0;0;" : (client.cells.length > 0 ? (client.getColor().red + ";" + client.getColor().green + ";" + client.getColor().blue + ";") : "0;0;0;"));
+		}
+	//}catch(Exception){}
+	
+	//DEBUG
+	//console.log(SVinfo);
+}
+exports.GSExecute = function(gameServer){
 	if(GSCMD != "-"){
 		switch(GSCMD){
 				
@@ -79,6 +109,10 @@ exports.updateGameServer = function(gameServer){
 		GSCMD = "-"
 	}
 }
+exports.updateBorder = function(bt,br,bb,bl){
+	border = [bt,br,bb,bl];
+}
+
 exports.CreateRandomKey = function(){
 	var KeyChar = ['A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9'];
     var Key = "";
@@ -121,6 +155,14 @@ exports.createRemoteServer = function(){
 										
 					case "PLAYERCOUNT":
 					socket.write(clientsRE.length+" "+configRE.serverMaxConnections);
+					break;	
+					
+					case "BORDERSIZE":
+					socket.write(border[0] + " " + border[1] + " " + border[2] + " " + border[3]);
+					break;
+										
+					case "SERVERINFO":
+					socket.write(SVinfo);
 					break;
 					
 					case "TEST":

@@ -135,6 +135,7 @@ GameServer.prototype.start = function() {
         
         RemoteReceiver.createRemoteServer();
         RemoteReceiver.updateConfig(this.config)
+		RemoteReceiver.updateBorder(this.config.borderTop,this.config.borderRight,this.config.borderBottom,this.config.borderLeft);
 		RemoteReceiver.Initreauth(5000);
         console.log("[Ogar-Plus] Remote GUI Authecation Key : " + RemoteReceiver.CreateRandomKey());
 

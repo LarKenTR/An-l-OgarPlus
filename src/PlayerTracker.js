@@ -71,6 +71,11 @@ PlayerTracker.prototype.setColor = function(color) {
     this.color.g = color.g;
 };
 
+PlayerTracker.prototype.getColor = function() {
+    var color = {red: this.color.r, green: this.color.g, blue: this.color.b};
+	return color;
+};
+
 PlayerTracker.prototype.getTeam = function() {
     return this.team;
 };

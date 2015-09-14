@@ -67,10 +67,37 @@ Commands.list = {
             if (gameServer.clients[i].playerTracker.pID == id) {
                 var client = gameServer.clients[i].playerTracker;
                 for (var j in client.cells) {
-                    client.cells[j].calcMergeTime(0);
+                    client.cells[j].calcMergeTime(-10000);
                 }
 
                 console.log("[Ogar-Plus] Forced " + client.name + " to merge cells");
+                break;
+            }
+        }
+    },
+    split: function(gameServer,split) {
+		// Validation checks
+		var id = parseInt(split[1]);
+		var count = parseInt(split[2]);
+        if (isNaN(id)) {
+            console.log("[Ogar-Plus] Please specify a valid player ID!");
+            return;
+        }
+        if (isNaN(count)) {
+			//Split into 16 cells
+			count = 4;
+        }
+
+        // Split!
+        for (var i in gameServer.clients) {
+            if (gameServer.clients[i].playerTracker.pID == id) {
+                var client = gameServer.clients[i].playerTracker;
+				//Split
+				for(var i =0;i<count;i++){
+				gameServer.splitCells(client);
+				}
+				
+                console.log("[Ogar-Plus] Forced " + client.name + " to split cells");
                 break;
             }
         }

@@ -46,8 +46,8 @@ exports.UpdatePlayers = function(gameServer){
 			SVinfo = SVinfo + (typeof gameServer.clients[i].remoteAddress != 'undefined' ? gameServer.clients[i].remoteAddress : "BOT") + ";";
 			SVinfo = SVinfo + client.getScore(true) + ";";
 			SVinfo = SVinfo + client.centerPos.x + ";" + client.centerPos.y + ";";
-			//SVinfo = SVinfo + client.getColor().red + ";" + client.getColor().green + ";" + client.getColor().blue + ";";
 			SVinfo = SVinfo + (client.spectate ? "0;0;0;" : (client.cells.length > 0 ? (client.getColor().red + ";" + client.getColor().green + ";" + client.getColor().blue + ";") : "0;0;0;"));
+			SVinfo = SVinfo + client.cells.length + ";";
 		}
 	//}catch(Exception){}
 	

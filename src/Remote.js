@@ -7,13 +7,16 @@ var net = require('net');
 var	clientsRE = [];
 var	configRE = {};
 var RemotePort = 556;
-var AuthVer = "AU01"
+var AuthVer = "AU02"
 var AuthKey = "ABCD"
 var GSCMD = "-";
 var GSARG = "-";
 var REAUTH = false;
-var SVinfo = "";
 var border;
+var SVinfo = "";
+var VirusInfo = "";
+var virustick = 0;
+var playertick = 0;
 exports.Initreauth = function(Timer){
 	REAUTH = true;
 	setTimeout(function () {
@@ -26,8 +29,20 @@ exports.updateConfig = function(config){
 exports.updateClients = function(clients){
 	clientsRE = clients;
 }
+exports.GamemodeTick = function(gameServer){
+	playertick++;
+	if(playertick >= gameServer.config.MAPPlayerTick){
+		playertick = 0;
+		this.UpdatePlayers(gameServer);	
+	}
+}
 exports.updateGameServer = function(gameServer){
-	this.UpdatePlayers(gameServer);
+	//Every 1 sec
+	virustick++;
+	if(virustick == 5){
+		virustick = 0;
+		this.UpdateViruses(gameServer);
+	}
 	this.GSExecute(gameServer);
 	
 }
@@ -51,8 +66,18 @@ exports.UpdatePlayers = function(gameServer){
 		}
 	//}catch(Exception){}
 	
+	
 	//DEBUG
 	//console.log(SVinfo);
+}
+exports.UpdateViruses = function(gameServer){
+	var len = gameServer.nodesVirus.length;
+	VirusInfo = "";
+    for (var i = 0;i < len;i++) {
+        var virus = gameServer.nodesVirus[i];
+		VirusInfo = VirusInfo + virus.position.x + ";";
+		VirusInfo = VirusInfo + virus.position.y + ";";
+	}
 }
 exports.GSExecute = function(gameServer){
 	if(GSCMD != "-"){
@@ -164,6 +189,10 @@ exports.createRemoteServer = function(){
 					case "SERVERINFO":
 					socket.write(SVinfo);
 					break;
+										
+					case "VIRUSINFO":
+					socket.write(VirusInfo);
+					break;
 					
 					case "TEST":
 					socket.write("PASS");
@@ -249,13 +278,4 @@ exports.createRemoteServer = function(){
         
     }).listen(556, '0.0.0.0');
 	//server.removeListener('connection', callback);
-}
-
-var getPLString = function(){
-	var datatoret = "";
-	for (var i = 0; i < clientsRE.length; i++) {
-            var client = clientsRE[i].playerTracker;
-            datatoret += " " + client.pID;
-        }
-	return datatoret;
 }

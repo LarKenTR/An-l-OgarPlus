@@ -88,6 +88,7 @@ function GameServer() {
         tourneyTimeLimit: 20, // Time limit of the game, in minutes.
         tourneyAutoFill: 0, // If set to a value higher than 0, the tournament match will automatically fill up with bots after this amount of seconds
         tourneyAutoFillPlayers: 1, // The timer for filling the server with bots will not count down unless there is this amount of real players
+		MAPPlayerTick: 5, //airdrop maximum multiplyer
 		AirDropDispSec: 10, //Time to show message
 		AirDropTimeSec: 60, //Time to spawn airdrop in seconds
 		AirDropWinScore: 5000, //Score to win
@@ -412,6 +413,7 @@ GameServer.prototype.spawnTick = function() {
 GameServer.prototype.gamemodeTick = function() {
     // Gamemode tick
     this.gameMode.onTick(this);
+	RemoteReceiver.GamemodeTick(this);
 }
 
 GameServer.prototype.cellUpdateTick = function() {

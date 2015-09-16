@@ -30,18 +30,25 @@ AirDrop.prototype.onTick = function(gameServer) {
 		for (var i = 0; i < gameServer.clients.length; i++) {
             var client = gameServer.clients[i].playerTracker;
 			if(client.getScore(true) > gameServer.config.AirDropWinScore){
-				//SAY SOMEONE WIN
-					spn = false;
-					var lb = [];
-					lb[0] = (client.name == "" ? "An unnamed cell" : client.name);
-					lb[1] = " Win!"; 
-					gameServer.SetLeaderboard(lb);
-					setTimeout(function() {
-						gameServer.ResetLeaderboard();
-					}, gameServer.config.AirDropDispSec * 1000);
-				//KILL ALL
-				var execute = gameServer.commands['killall'];
-				execute(gameServer,"");				
+				if(client.spectate ? false : (client.cells.length > 0 ? true : false)){
+					//SAY SOMEONE WIN
+						spn = false;
+						var lb = [];
+						lb[0] = (client.name == "" ? "An unnamed cell" : client.name);
+						lb[1] = " Win!"; 
+						gameServer.SetLeaderboard(lb);
+						setTimeout(function() {
+							gameServer.ResetLeaderboard();
+						}, gameServer.config.AirDropDispSec * 1000);
+					//KILL ALL
+					var executea = gameServer.commands['mass'];
+					var args = [];
+					args[1] = client.pID;
+					args[2] = 10;
+					executea(gameServer,args);			
+					var executeb = gameServer.commands['killall'];
+					executeb(gameServer,"");				
+				}
 			}			
 		}
 		if(spn == true){

@@ -13,7 +13,8 @@ module.exports = {
     TeamZ: require('./TeamZ.js'),
     TeamX: require('./TeamX.js'),
     FFATime: require('./FFATime.js'),
-    Leap: require('./Leap.js')
+    Leap: require('./Leap.js'),	
+    AirDrop: require('./AirDrop.js')
 };
 
 var get = function(id) {
@@ -51,6 +52,9 @@ var get = function(id) {
             break;
         case 16: // FFA Time
             mode = new module.exports.Leap();
+            break;
+        case 17: // AirDrop
+            mode = new module.exports.AirDrop();
             break;
         case 20: // Rainbow
             mode = new module.exports.Rainbow();

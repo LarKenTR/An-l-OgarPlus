@@ -102,6 +102,17 @@ Commands.list = {
             }
         }
     },
+    randomairdrop: function(gameServer,split) {
+		var mass = parseInt(split[1]);
+		var chance = parseInt(split[2]);
+        if (isNaN(mass)) {
+			mass = 100;
+		}
+        if (isNaN(chance)) {
+			chance = 50;
+		}
+		gameServer.SpawnRottenFood("Random airdrop!" , "" , mass , 1 , chance ,gameServer.getRandomPosition());
+    },
     addbot: function(gameServer,split) {
         var add = 1; // Adds 1 bot
 

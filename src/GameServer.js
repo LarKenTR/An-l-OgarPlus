@@ -88,6 +88,21 @@ function GameServer() {
         tourneyTimeLimit: 20, // Time limit of the game, in minutes.
         tourneyAutoFill: 0, // If set to a value higher than 0, the tournament match will automatically fill up with bots after this amount of seconds
         tourneyAutoFillPlayers: 1, // The timer for filling the server with bots will not count down unless there is this amount of real players
+		AirDropDispSec: 10, //Time to show message
+		AirDropTimeSec: 60, //Time to spawn airdrop in seconds
+		AirDropWinScore: 5000, //Score to win
+		AirDropVirusChanceMin: 0, //Virused Min
+		AirDropVirusChanceMax: 100, //Virused Max
+		AirDropCenterChance: 30, //Chance airdrop to spawn on center of the map
+		AirDropSmallMassChance: 20, //Chance in percentage for small airdrop
+		AirDropSmallMassMin: 50, //Small airdrop minimum size
+		AirDropSmallMassMax: 200, //Small airdrop maximum size
+		AirDropSmallMultiplyerMin: 1, //Small airdrop minimum multiplyer
+		AirDropSmallMultiplyerMax: 4, //Small airdrop maximum multiplyer
+		AirDropMassMin: 100, //airdrop minimum size
+		AirDropMassMax: 300, //airdrop maximum size
+		AirDropMultiplyerMin: 2, //airdrop minimum multiplyer
+		AirDropMultiplyerMax: 3, //airdrop maximum multiplyer
     };
     // Parse config
     this.loadConfig();
@@ -359,9 +374,28 @@ GameServer.prototype.removeNode = function(node) {
     }
 };
 
+var ResetLB;
+GameServer.prototype.ResetLeaderboard = function(){
+	ResetLB = true;
+}
+
+GameServer.prototype.SetLeaderboard = function(lb){	
+    this.gameMode.packetLB = 48;
+    this.gameMode.specByLeaderboard = false;
+    this.gameMode.updateLB = function(gameServer) {gameServer.leaderboard = lb};
+}
+
 GameServer.prototype.cellTick = function() {
     // Move cells
     this.updateMoveEngine();
+	
+	if(ResetLB == true){
+		ResetLB = false;
+        var gm = Gamemode.get(this.gameMode.ID);
+        this.gameMode.packetLB = gm.packetLB;
+        this.gameMode.updateLB = gm.updateLB; 
+	}
+	
 }
 
 GameServer.prototype.spawnTick = function() {
@@ -577,6 +611,54 @@ GameServer.prototype.updateMoveEngine = function() {
 GameServer.prototype.setAsMovingNode = function(node) {
     this.movingNodes.push(node);
 };
+
+GameServer.prototype.SpawnRottenFood = function(msg,msg2,size,multiply,chance,pos,showtime) {
+	//pos = this.getRandomPosition();
+	
+	if(chance > 100){
+		return;
+	}
+	//CORE
+	if(chance > (Math.random() * 100)){
+		var corepos = {x: pos.x, y: pos.y};
+		var coremass = 1;
+		var v = new Entity.Virus(this.getNextNodeId(), null, corepos, coremass);
+		this.addNode(v);
+	}
+	//FOOD
+	for(var i = 0;i<multiply;i++){
+		//Spawn
+		var foodpos = {x: pos.x, y: pos.y};
+		var foodmass = size;
+		var f = new Entity.Food(this.getNextNodeId(), null, foodpos, foodmass);
+		f.setColor(this.getRandomColor());
+		//ADD TO REGISTRY
+		this.addNode(f);
+		this.currentFood++; 
+	}
+	//DISPLAY
+	var timems = 5000;
+	if(!isNaN(showtime)){
+		timems = showtime;
+	}
+	//SHOW FOR 5 SECOND
+	
+    var gm = Gamemode.get(this.gameMode.ID);
+	var lb = [];
+	lb[0] = msg;
+	var lbcc = 0;
+	if(msg2 != ""){
+		lbcc = 1;
+		lb[1] = msg2;
+	}
+	lb[lbcc + 1] = "size : " + size;
+	lb[lbcc + 2] = "mass : " + (size * multiply);
+	lb[lbcc + 3] = "chance : " + chance;
+	this.SetLeaderboard(lb);
+	setTimeout(function() {
+		ResetLB = true;
+	}, timems);
+}
 
 GameServer.prototype.splitCells = function(client) {
     var len = client.cells.length;

@@ -85,6 +85,10 @@ exports.GSExecute = function(gameServer){
 				
 			//parseInt("12345")
 			
+			case "SVTICK":
+			gameServer.config.MAPPlayerTick = parseInt(GSARG);
+			break;
+			
 			case "STOP":
 			gameServer.socketServer.close();
 			process.exit(1);

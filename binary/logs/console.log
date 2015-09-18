@@ -1,4 +1,45 @@
 [Ogar-Plus] Loaded stats server on port 88
-[Ogar-Plus] Listening on port 443
+[Ogar-Plus] Listening on port 250
 [Ogar-Plus] Current game mode is Free For All
-[Ogar-Plus] Remote GUI Authecation Key : 0CE6
+[Ogar-Plus] Remote GUI Authecation Key : 0DDC
+[Ogar-Plus] Remote GUI connected!
+[Ogar-Plus] Remote GUI address : 127.0.0.1:56896
+>addbots 10
+[Ogar-Plus] Added 10 player bots
+>gamemode 17
+[Ogar-Plus] Changed game mode to AirDrop
+>merge 1
+[Ogar-Plus] Forced  to merge cells
+>merge 1
+[Ogar-Plus] Forced  to merge cells
+[Ogar-Plus] Set mass of  to 10
+[Ogar-Plus] Removed 26 cells
+>mass 1 100
+[Ogar-Plus] Set mass of  to 100
+>merge 1
+[Ogar-Plus] Forced  to merge cells
+>merge 1
+[Ogar-Plus] Forced  to merge cells
+> 
+[Ogar-Plus] Invalid Command!
+>merge 1
+[Ogar-Plus] Forced  to merge cells
+>mass 1 1000
+[Ogar-Plus] Set mass of  to 1000
+>mass 1 2000
+[Ogar-Plus] Set mass of  to 2000
+[Ogar-Plus] Set mass of  to 10
+[Ogar-Plus] Removed 29 cells
+[Ogar-Plus] Set mass of The Cheesy Thin to 10
+[Ogar-Plus] Removed 14 cells
+> mass 1 5000
+[Ogar-Plus] Invalid Command!
+>mass 1 5000
+[Ogar-Plus] Set mass of Cheesy Thing to 5000
+>mass 1 5000
+[Ogar-Plus] Set mass of Cheesy Thing to 5000
+[Ogar-Plus] Set mass of STALIN to 10
+[Ogar-Plus] Removed 30 cells
+[Ogar-Plus] Error: read ECONNRESET
+[Ogar-Plus] Remote GUI disconnected!
+>stop

@@ -4,7 +4,7 @@ module.exports = {
     Teams: require('./Teams'),
     Experimental: require('./Experimental'),
 	VirusOff: require('./VirusOff'),
-    TVO: require('./TVO'),
+    TeamVirusOff: require('./TeamVirusOff'),
     Tournament: require('./Tournament'),
     HungerGames: require('./HungerGames'),
 	Rainbow: require('./Rainbow'),
@@ -30,7 +30,7 @@ var get = function(id) {
             mode = new module.exports.VirusOff();
             break;
         case 4: // Team Virus Off
-            mode = new module.exports.TVO();
+            mode = new module.exports.TeamVirusOff();
             break;
         case 10: // Tournament
             mode = new module.exports.Tournament();

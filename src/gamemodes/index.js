@@ -32,6 +32,9 @@ var get = function(id) {
         case 4: // Team Virus Off
             mode = new module.exports.TeamVirusOff();
             break;
+        case 5: // FFA Time
+            mode = new module.exports.FFATime();
+            break;
         case 10: // Tournament
             mode = new module.exports.Tournament();
             break;
@@ -47,10 +50,7 @@ var get = function(id) {
         case 14: // Experimental Team
             mode = new module.exports.TeamX();
             break;
-        case 15: // FFA Time
-            mode = new module.exports.FFATime();
-            break;
-        case 16: // FFA Time
+        case 16: // Leap
             mode = new module.exports.Leap();
             break;
         case 17: // AirDrop

@@ -11,13 +11,13 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 
 
 * Leap : Fix spacebar problem 
+* FFATime : display time on scoreboard
+* FFATime : set how long to you want
 
 
 ##### SOON
 
 
-* FFATime : display time on scoreboard
-* FFATime : set how long to you want
 * More Gamemode...
 
 

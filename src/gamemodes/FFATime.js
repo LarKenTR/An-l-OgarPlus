@@ -166,35 +166,15 @@ TFFA.prototype.updateLB = function(gameServer) {
             lb[1] = "players";
             break;
         case 1:
-            if (gameServer.config.ffaTimeWinners = true) {
-                lb[0] = "Congratulations";
-                lb[1] = this.winner.getName();
-                lb[2] = "for winning!";
-                    if (this.timer <= 0) {
-                        // Reset the game
-                        this.onServerInit(gameServer);
-                        // Respawn starting food
-                        gameServer.startingFood();
-                    } else {
-                        lb[2] = "Game restarting in";
-                        lb[3] = this.timer.toString();
-                        this.timer--;
-                    }
-            } else if (gameServer.config.ffaTimeWinners = false) {
-                if (this.timer <= 0) {
-                // Reset the game
-                this.onServerInit(gameServer);
-                // Respawn starting food
-                gameServer.startingFood();
+            if (this.timer <= 0) {
+            // Reset the game
+            this.onServerInit(gameServer);
+            // Respawn starting food
+            gameServer.startingFood();
             } else {
                 lb[2] = "Game restarting in";
                 lb[3] = this.timer.toString();
                 this.timer--;
-            }
-            } else if (gameServer.config.ffaTimeWinners != true) {
-                if (gameServer.config.ffaTimeWinners != false) {
-                    gameServer.config.ffaTimeWinners = true
-                }
             }
             break;
         case 2:

@@ -14,7 +14,8 @@ module.exports = {
     TeamX: require('./TeamX.js'),
     FFATime: require('./FFATime.js'),
     Leap: require('./Leap.js'),	
-    AirDrop: require('./AirDrop.js')
+    AirDrop: require('./AirDrop.js'),
+    Murder: require('./Murder.js'),
 };
 
 var get = function(id) {
@@ -55,6 +56,9 @@ var get = function(id) {
             break;
         case 17: // AirDrop
             mode = new module.exports.AirDrop();
+            break;
+        case 18: // Murder
+            mode = new module.exports.Murder();
             break;
         case 20: // Rainbow
             mode = new module.exports.Rainbow();

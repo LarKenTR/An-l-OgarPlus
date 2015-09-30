@@ -22,6 +22,11 @@ function Murder() {
 	this.prevdeadlyvirus = [];
 	this.players = [];
 	this.showplayerlength = false;
+	this.murderer = {
+		name: "",
+		id: 0,
+		randomed: false
+	}
 }
 
 module.exports = Murder; // Remove the <> and make sure to not put the .js at the end
@@ -45,7 +50,7 @@ Murder.prototype.onTick = function(gameServer) {
 	sectick--;
 	if(sectick <= 0){
 		sectick = 10;
-		//call every 1 second
+		//call every 0.5 second
 		
 		//REMOVE DEAD PLAYER
 		for(var i = 0;i<this.players.length;i++){
@@ -62,26 +67,22 @@ Murder.prototype.onTick = function(gameServer) {
 		}
 		
 		try{
-			if(this.players.length == 1){
-				if(this.players[1].Murderer){
-					//When murderer is the last one				
-					var lb = [];
-					lb.push("Murderer Win!");
-					lb.push("===============");
-					lb.push(murderer.name);	
-					lb.push("is the murderer");
-					lb.push("===============");
-					lb.push("murderer kill");
-					lb.push("everyone!");
-					gameServer.SetLeaderboard(lb);
+			if(this.gamestep == 4){
+				if(this.players.length == 1){
+					var murc = 0;
 					for(var i = 0;i<this.players.length;i++){
-						KillPlayerTemplate(gameServer,this.players[i].pID);
+						if(this.players[i].Murderer){
+							murc++;
+						}
 					}
-					this.players = [];
-					this.gamestep = 5;
-					setTimeout(function(){
-						resetboard == true;
-					},10000);
+					if(murc > 0){
+						this.onGameEnd(gameServer,0);
+					}
+				}
+				else if(this.players.length < 1){
+					//NO ONE WIN
+					//GAME END WITH UNKNOWN REASON
+					this.onGameEnd(gameServer,2);
 				}
 			}
 		}
@@ -110,13 +111,55 @@ Murder.prototype.onTick = function(gameServer) {
 			var lb = [];
 			lb.push("Game start in");
 			lb.push(this.gamecountdown + " second");
+			if(this.gamecountdown <= 10){
+				if(!this.murderer.randomed){
+					for(var i = 0;i<this.players.length;i++){
+						var player = this.players[i];
+						player.originame = player.name;
+						player.name = "" + (Math.round(Math.random() * 6000));
+					}
+					//RANDOM PLAYER
+					while(true){
+						for(var i = 0;i<this.players.length;i++){
+							var player = this.players[i];
+							if((Math.random() * this.players.length * 2) < 2){
+								player.Murderer = true;
+								this.murderer.name = player.originame;
+								this.murderer.id = player.pID;
+								this.murderer.fn = player.name;
+								this.murderer.randomed = true;
+								break;
+							}						
+						}
+						if(this.murderer.randomed) break;
+					}
+				}
+				
+				lb.push("===============");
+				lb.push(this.murderer.fn);
+				lb.push("is the murderer!");
+				lb.push("===============");
+				lb.push("Murderer :");
+				lb.push("W : random name");
+				lb.push("SPACE : shoot");
+				lb.push("===============");
+			}
+			
 			gameServer.SetLeaderboard(lb);
+			
 			if(this.gamecountdown == 0){
 				this.gamestep = 3;
+				this.murderer.randomed = false;
 			}
 		}
 	}
 	else if(this.gamestep == 3){
+		for(var i = 0;i<this.players.length;i++){
+			var player = this.players[i];
+			player.name = player.originame;
+			player.originame = null;
+		}
+		
 		gameServer.ResetLeaderboard();
 		
 		for(var i = 0;i<this.players.length;i++){
@@ -135,6 +178,62 @@ Murder.prototype.onTick = function(gameServer) {
 		this.showplayerlength = false;
 	}
 };
+
+Murder.prototype.onGameEnd = function(gameServer,endcode,killer){
+	//EC 0 = mur , 1 = bys , 2 = none , 3 = timelimited
+	var lb = [];
+	switch(endcode){
+		case 0:
+			lb.push("Murderer Win!");
+			lb.push("===============");
+			lb.push(this.murderer.name);	
+			lb.push("is the murderer");
+			lb.push("===============");
+			lb.push("murderer kill");
+			lb.push("everyone!");
+		break;
+		
+		case 1:
+			lb.push("Bystander Win!");
+			lb.push("===============");
+			lb.push(this.murderer.name);	
+			lb.push("is the murderer");
+			lb.push("===============");
+			lb.push(killer.name);
+			lb.push("killed murderer");		
+		break;
+		
+		case 2:
+			lb.push("NO ONE WIN!");
+			lb.push("===============");
+			lb.push(this.murderer.name);	
+			lb.push("is the murderer");
+			lb.push("===============");	
+		break;
+		
+		case 3:
+			lb.push("TIME LIMITED!");
+			lb.push("===============");
+			lb.push(this.murderer.name);	
+			lb.push("is the murderer");
+			lb.push("===============");			
+		break;
+	}
+	
+	gameServer.SetLeaderboard(lb);
+		
+	this.murderer = [];
+	this.murderer.randomed = false;
+	for(var i = 0;i<this.players.length;i++){
+		this.players[i].Murderer = false;
+		KillPlayerTemplate(gameServer,this.players[i].pID);
+	}
+	this.players = [];
+	this.gamestep = 5;
+	setTimeout(function(){
+		resetboard = true;
+	},10000);
+}
 
 Murder.prototype.onServerInit = function(gameServer) {
     // Called when the server starts
@@ -175,6 +274,7 @@ Murder.prototype.pressW = function(gameServer,player) {
         }
         if(player.renamecooldown == false){
             RandomName(player);
+			this.murderer.name = player.name;
             player.renamecooldown = true;
             setTimeout(function(){
                 player.renamecooldown = false;
@@ -187,21 +287,17 @@ Murder.prototype.pressW = function(gameServer,player) {
     }
 };
 
-var tubemurder = true;
-
 Murder.prototype.onPlayerSpawn = function(gameServer,player) {
     // Called when a player is spawned
 	if(this.gamestep!=3){
-		player.Murderer = tubemurder;
-		if(tubemurder == true) tubemurder = false;
 		player.color = gameServer.getRandomColor()
 		RandomName(player);
 		gameServer.spawnPlayer(player);
 		setSpeed(gameServer,player,0);
 		this.players.push(player);
-		if(this.players.length > 2){
+		if(this.players.length > (gameServer.config.MurderMinPlayer - 1)){
 			this.gamestep = 1;
-			this.gamecountdown = 10;
+			this.gamecountdown = gameServer.config.MurderCooldown;
 		}
 	}
 };
@@ -211,23 +307,7 @@ Murder.prototype.onMurdererDied = function(gameServer,killer,murderer){
 	//KILL MURDERER
 	KillPlayerTemplate(gameServer,murderer.pID);
 	//DISPLAY
-	var lb = [];
-	lb.push("Bystander Win!");
-	lb.push("===============");
-	lb.push(murderer.name);	
-	lb.push("is the murderer");
-	lb.push("===============");
-	lb.push(killer.name);
-	lb.push("killed murderer");
-	gameServer.SetLeaderboard(lb);
-	for(var i = 0;i<this.players.length;i++){
-		KillPlayerTemplate(gameServer,this.players[i].pID);
-	}
-	this.players = [];
-	this.gamestep = 5;
-	setTimeout(function(){
-		resetboard == true;
-	},10000);
+	this.onGameEnd(gameServer,1,killer);
 }
 
 Murder.prototype.onPlayerConsuming = function(gameServer,consumer,victim){
@@ -235,7 +315,8 @@ Murder.prototype.onPlayerConsuming = function(gameServer,consumer,victim){
 		if(!consumer.Murderer){
 			//WHEN PLAYER EAT PLAYER
 			if(consumer.pID != victim.pID){
-				MassPlayerTemplate(gameServer,consumer.pID,10);
+				MassPlayerTemplate(gameServer,consumer.pID,20);
+				KillPlayerTemplate(gameServer,victim.pID);
 				var lb = [];
 				lb.push(consumer.name);
 				lb.push("eat an innocent");

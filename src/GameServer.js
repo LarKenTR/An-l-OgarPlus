@@ -105,7 +105,9 @@ function GameServer() {
 		AirDropMultiplyerMin: 2, //airdrop minimum multiplyer
 		AirDropMultiplyerMax: 3, //airdrop maximum multiplyer
 		MurderMinPlayer: 3,
-		MurderCooldown: 20,
+		MurderCooldown: 30,
+		MurdererBigFoodMax: 20,
+		MurdererBigFoodMass: 5,
     };
     // Parse config
     this.loadConfig();

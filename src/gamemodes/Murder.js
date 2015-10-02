@@ -2,7 +2,10 @@ var FFA = require('./FFA') //Base Gamemode
 var Entity = require('../entity'); //You can delete if your gamemode doesn't modify entities
 var EntityVirus = new require('../entity/Virus.js');
 var PlayerCell = new require('../entity/PlayerCell.js');
+var EntityFood = new require('../entity/Food.js');
+var OPC = require('../OPC');
 
+var onFoodConsume = EntityFood.prototype.onConsume;
 var onPlayerCellConsume = PlayerCell.prototype.onConsume;
 function Murder() {
     FFA.apply(this, Array.prototype.slice.call(arguments)); // Delete if you're not using a base gamemode (recommended to use one)
@@ -21,7 +24,9 @@ function Murder() {
 	this.gamecountdown = 0;
 	this.prevdeadlyvirus = [];
 	this.players = [];
+	this.foods = 0;
 	this.showplayerlength = false;
+	this.last10sec = false;
 	this.murderer = {
 		name: "",
 		id: 0,
@@ -52,6 +57,12 @@ Murder.prototype.onTick = function(gameServer) {
 		sectick = 10;
 		//call every 0.5 second
 		
+		if(this.foods < gameServer.config.MurdererBigFoodMax){
+			var foody = OPC.SpawnFood(gameServer,gameServer.getRandomPosition(),gameServer.config.MurdererBigFoodMass);
+			foody.mbm = true;
+			this.foods++;
+		}
+		
 		//REMOVE DEAD PLAYER
 		for(var i = 0;i<this.players.length;i++){
 			var client = this.players[i];
@@ -68,7 +79,7 @@ Murder.prototype.onTick = function(gameServer) {
 		
 		try{
 			if(this.gamestep == 4){
-				if(this.players.length == 1){
+				if(this.players.length < 2){
 					var murc = 0;
 					for(var i = 0;i<this.players.length;i++){
 						if(this.players[i].Murderer){
@@ -77,6 +88,9 @@ Murder.prototype.onTick = function(gameServer) {
 					}
 					if(murc > 0){
 						this.onGameEnd(gameServer,0);
+					}
+					else{
+						this.onGameEnd(gameServer,2);
 					}
 				}
 				else if(this.players.length < 1){
@@ -112,6 +126,7 @@ Murder.prototype.onTick = function(gameServer) {
 			lb.push("Game start in");
 			lb.push(this.gamecountdown + " second");
 			if(this.gamecountdown <= 10){
+				this.last10sec = true;
 				if(!this.murderer.randomed){
 					for(var i = 0;i<this.players.length;i++){
 						var player = this.players[i];
@@ -119,10 +134,30 @@ Murder.prototype.onTick = function(gameServer) {
 						player.name = "" + (Math.round(Math.random() * 6000));
 					}
 					//RANDOM PLAYER
+					var count = Math.round(Math.random() * (Math.random() * 86) * (this.players.length / 2));
+					var player;
+					while(true){
+						if(count > this.players.length){
+							count -= this.players.length;
+						}
+						else
+						{
+							break;
+						}
+					}
+					player = this.players[count - 1];
+					
+					player.Murderer = true;
+					this.murderer.name = player.originame;
+					this.murderer.id = player.pID;
+					this.murderer.fn = player.name;
+					this.murderer.randomed = true;
+					
+					/*
 					while(true){
 						for(var i = 0;i<this.players.length;i++){
 							var player = this.players[i];
-							if((Math.random() * this.players.length * 2) < 2){
+							if((Math.random() * this.players.length * 2) < 1){
 								player.Murderer = true;
 								this.murderer.name = player.originame;
 								this.murderer.id = player.pID;
@@ -132,16 +167,12 @@ Murder.prototype.onTick = function(gameServer) {
 							}						
 						}
 						if(this.murderer.randomed) break;
-					}
+					}*/
 				}
 				
 				lb.push("===============");
 				lb.push(this.murderer.fn);
 				lb.push("is the murderer!");
-				lb.push("===============");
-				lb.push("Murderer :");
-				lb.push("W : random name");
-				lb.push("SPACE : shoot");
 				lb.push("===============");
 			}
 			
@@ -167,6 +198,7 @@ Murder.prototype.onTick = function(gameServer) {
 			MassPlayerTemplate(gameServer,this.players[i].pID,100 + (Math.random() * 60) - 30);
 		}
 		this.showplayerlength = true;
+		this.last10sec = false;
 		this.gamestep = 4;
 	}
 	else if (this.gamestep == 4){
@@ -239,7 +271,17 @@ Murder.prototype.onServerInit = function(gameServer) {
     // Called when the server starts
     gameServer.run = true;
 	this.gamestep = 0;
-	//RE-PROGRAM PLAYER CONSUMING
+	
+	while(this.foods < gameServer.config.MurdererBigFoodMax){
+			var foody = OPC.SpawnFood(gameServer,gameServer.getRandomPosition(),gameServer.config.MurdererBigFoodMass);
+			foody.mbm = true;
+			this.foods++;
+	}
+	 
+	EntityFood.prototype.onRemove = function(gameServer) {
+		gameServer.currentFood--;
+		if(!isNaN(this.mbm)) gameServer.gameMode.foods--;
+	};
 	
 	PlayerCell.prototype.onConsume = function(consumer,gameServer){
 		consumer.addMass(this.mass);
@@ -283,19 +325,21 @@ Murder.prototype.pressW = function(gameServer,player) {
     }
     else{
         //When player not murderer
-        gameServer.ejectMass(player);
+        //gameServer.ejectMass(player);
+		this.BysShootVirus(gameServer,player);
     }
 };
 
 Murder.prototype.onPlayerSpawn = function(gameServer,player) {
     // Called when a player is spawned
-	if(this.gamestep!=3){
-		player.color = gameServer.getRandomColor()
+	if(this.gamestep!=4 && this.last10sec==false){
+		player.color = gameServer.getRandomColor();
 		RandomName(player);
 		gameServer.spawnPlayer(player);
+		MassPlayerTemplate(gameServer,player.pID,10);
 		setSpeed(gameServer,player,0);
 		this.players.push(player);
-		if(this.players.length > (gameServer.config.MurderMinPlayer - 1)){
+		if((this.players.length > (gameServer.config.MurderMinPlayer - 1)) && this.gamestep < 1){
 			this.gamestep = 1;
 			this.gamecountdown = gameServer.config.MurderCooldown;
 		}
@@ -346,8 +390,39 @@ Murder.prototype.pressSpace = function(gameServer,player) {
 Murder.prototype.onChange = function(gameServer) {
     // Called when someone changes the gamemode via console commands
 	PlayerCell.prototype.onConsume = onPlayerCellConsume;
+	EntityFood.prototype.onConsume = onFoodConsume;
 };
 
+var RandomName = function(player){
+    var skinno = 0;
+	var name2writ = "";
+	while(true){
+		var name2ret = RandomNameText();
+		var exists = 0;
+		try{
+			for(var i = 0;i<this.player.length;i++){
+				if(this.players[i].name == name2ret){
+					exists++;
+				}
+			}
+		}
+		catch(Exception){}
+		if(exists > 0) continue;
+		name2writ = name2ret;
+		break;
+	}
+    player.name = name2writ; //Random Name
+}
+
+var RandomNameText = function(){
+    var skinno = 0;
+    try{
+        skinno = Math.round(Math.random() * skins.length);
+    }
+	catch(Exception){}
+	return skins[skinno];
+}
+/* ORIGINAL RANDOM NAME CODE
 var RandomName = function(player){
     var skinno = 0;
     try{
@@ -356,11 +431,17 @@ var RandomName = function(player){
     catch(Exception){}
     player.name = skins[skinno]; //Random Name
 }
+*/
 
-Murder.prototype.ShootVirus = function(gameServer,player){
+
+Murder.prototype.ShootVirus = function(gameServer,player,value){
+	var valuetoshoot = 60;
+	if(!isNaN(value)){
+		valuetoshoot = value;
+	}
 	if(isNaN(player.shootcooldown)){
 		player.shootcooldown = false;
-	}
+	}	
 	if(player.shootcooldown == false){
 		player.shootcooldown = true;
 		for (var i = 0; i < player.cells.length; i++) {
@@ -370,9 +451,13 @@ Murder.prototype.ShootVirus = function(gameServer,player){
 				continue;
 			}
 
+			//MINIMUM MASS
 			if (cell.mass < 50) {
 				continue;
 			}
+			
+			//MASS TO LOST
+			cell.mass -= 25;
 
 			var deltaY = player.mouse.y - cell.position.y;
 			var deltaX = player.mouse.x - cell.position.x;
@@ -382,11 +467,10 @@ Murder.prototype.ShootVirus = function(gameServer,player){
 				x: cell.position.x + ( (size + 15) * Math.sin(angle) ),
 				y: cell.position.y + ( (size + 15) * Math.cos(angle) )
 			};
-			cell.mass -= 50
 			angle += (Math.random() * .4) - .2;
 			var ejected = new deadlyVirus(gameServer.getNextNodeId(), null, startPos, 15);
 			ejected.setAngle(angle);
-			ejected.setMoveEngineData(40, 20);
+			ejected.setMoveEngineData(valuetoshoot, 20);
 			gameServer.addNode(ejected);
 			gameServer.setAsMovingNode(ejected);
 			this.prevdeadlyvirus.push(ejected);
@@ -399,6 +483,45 @@ Murder.prototype.ShootVirus = function(gameServer,player){
 		},5000)
 	}
 }
+
+Murder.prototype.BysShootVirus = function(gameServer,player) {
+    var client = player;
+for (var i = 0; i < client.cells.length; i++) {
+    var cell = client.cells[i];
+
+        if (!cell) {
+            continue;
+        }
+
+        if (cell.mass < 250) {
+            continue;
+        }
+
+        // Remove mass from parent cell
+        cell.mass -= 50
+
+        var deltaY = client.mouse.y - cell.position.y;
+        var deltaX = client.mouse.x - cell.position.x;
+        var angle = Math.atan2(deltaX,deltaY);
+
+        // Get starting position
+        var size = cell.getSize() + 5;
+        var startPos = {
+            x: cell.position.x + ( (size + 15) * Math.sin(angle) ),
+            y: cell.position.y + ( (size + 15) * Math.cos(angle) )
+        };
+        // Randomize angle
+        angle += (Math.random() * .4) - .2;
+
+        // Create cell
+        var ejected = new Entity.Virus(gameServer.getNextNodeId(), null, startPos, 15);
+        ejected.setAngle(angle);
+        ejected.setMoveEngineData(100, 20);
+
+        //Shoot Virus
+	    gameServer.ejectVirus(ejected)
+    }
+};
 
 var skins = ["Poland","Usa","China","Russia","Canada","Australia","Spain","Brazil",
 "France","Sweden","Chaplin","North Korea","South Korea","Japan","United Kingdom",
@@ -421,6 +544,22 @@ deadlyVirus.prototype.onConsume = function(consumer,gameServer) {
 	if(!ismurderer){
 		this.KillPlayer(gameServer,consumer.owner.pID);		
 	}
+	/*
+	else{
+		if(!isNaN(this.ownerpid)){
+			var player = null;
+			for(var i = 0; i < gameServer.gameMode.players.length;i++){
+				if(gameServer.gameMode.players[i].pID == this.ownerpid){
+					player = gameServer.gameMode.players[i];
+					break;
+				}
+			}
+			if(player!=null){
+				gameServer.gameMode.onGameEnd(gameServer,1,player);
+			}
+		}
+	}
+	*/
 }
 
 deadlyVirus.prototype.KillPlayer = function(gameServer,id){

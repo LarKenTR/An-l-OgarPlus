@@ -15,7 +15,7 @@ module.exports = {
     FFATime: require('./FFATime.js'),
     Leap: require('./Leap.js'),	
     AirDrop: require('./AirDrop.js'),
-    Murder: require('./Murder.js'),
+    Murder: require('./Murder.js')
 };
 
 var get = function(id) {

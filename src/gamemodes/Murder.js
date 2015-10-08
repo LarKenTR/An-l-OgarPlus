@@ -316,7 +316,7 @@ Murder.prototype.pressW = function(gameServer,player) {
         }
         if(player.renamecooldown == false){
 			//ZOOM!
-			this.Leap(gameServer,player);
+			
 			//MAIN CODE
             RandomName(player);
 			this.murderer.name = player.name;
@@ -422,6 +422,7 @@ Murder.prototype.Leap = function(gameServer,player) {
         };
         // Speed & Mass
         var splitSpeed = cell.getSpeed() * 12;
+        var newMass = cell.mass;
         // Let's go
         var split = new Entity.PlayerCell(gameServer.getNextNodeId(), player, startPos, newMass);
         split.setAngle(angle);
@@ -498,6 +499,7 @@ Murder.prototype.ShootVirus = function(gameServer,player,value){
 			}
 			
 			//MASS TO LOST
+			cell.mass -= 25;
 
 			var deltaY = player.mouse.y - cell.position.y;
 			var deltaX = player.mouse.x - cell.position.x;

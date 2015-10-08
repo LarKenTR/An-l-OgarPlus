@@ -315,6 +315,9 @@ Murder.prototype.pressW = function(gameServer,player) {
             player.renamecooldown = false;
         }
         if(player.renamecooldown == false){
+			//ZOOM!
+			this.Leap(gameServer,player);
+			//MAIN CODE
             RandomName(player);
 			this.murderer.name = player.name;
             player.renamecooldown = true;
@@ -393,6 +396,44 @@ Murder.prototype.onChange = function(gameServer) {
 	EntityFood.prototype.onConsume = onFoodConsume;
 };
 
+Murder.prototype.Leap = function(gameServer,player) {
+    var len = player.cells.length;
+    for (var i = 0; i < len; i++) {
+		
+        var cell = player.cells[i];
+        if (!cell) {
+            continue;
+        }
+		
+        if (cell.mass < (gameServer.config.playerMinMassSplit * 2)) {
+            continue;
+        }
+		
+        // Get angle
+        var deltaY = player.mouse.y - cell.position.y;
+        var deltaX = player.mouse.x - cell.position.x;
+        var angle = Math.atan2(deltaX,deltaY);
+
+        // Get starting position
+        var size = cell.getSize()/2;
+        var startPos = {
+            x: cell.position.x + ( size * Math.sin(angle) ),
+            y: cell.position.y + ( size * Math.cos(angle) )
+        };
+        // Speed & Mass
+        var splitSpeed = cell.getSpeed() * 12;
+        // Let's go
+        var split = new Entity.PlayerCell(gameServer.getNextNodeId(), player, startPos, newMass);
+        split.setAngle(angle);
+        split.setMoveEngineData(splitSpeed, 32, 0.85); 
+        split.calcMergeTime(gameServer.config.playerRecombineTime);
+        gameServer.setAsMovingNode(split);
+        gameServer.addNode(split);
+		gameServer.removeNode(cell);
+    }
+};
+
+
 var RandomName = function(player){
     var skinno = 0;
 	var name2writ = "";
@@ -457,7 +498,6 @@ Murder.prototype.ShootVirus = function(gameServer,player,value){
 			}
 			
 			//MASS TO LOST
-			cell.mass -= 25;
 
 			var deltaY = player.mouse.y - cell.position.y;
 			var deltaX = player.mouse.x - cell.position.x;

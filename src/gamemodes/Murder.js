@@ -293,7 +293,8 @@ Murder.prototype.onServerInit = function(gameServer) {
 			if(consumer.owner.Murderer){
 				mcheck = false;	
 				//WHEN MURDERER EAT SOMEONE				
-				//NOTHING TO DO
+				KillPlayerTemplate(gameServer,this.owner.pID)
+				consumer.mass += 50;
 			}
 		}		
 		if(mcheck){
@@ -316,7 +317,7 @@ Murder.prototype.pressW = function(gameServer,player) {
         }
         if(player.renamecooldown == false){
 			//ZOOM!
-			
+			this.Leap(gameServer,player);
 			//MAIN CODE
             RandomName(player);
 			this.murderer.name = player.name;
@@ -421,12 +422,12 @@ Murder.prototype.Leap = function(gameServer,player) {
             y: cell.position.y + ( size * Math.cos(angle) )
         };
         // Speed & Mass
-        var splitSpeed = cell.getSpeed() * 12;
+        var splitSpeed = cell.getSpeed() * 9;
         var newMass = cell.mass;
         // Let's go
         var split = new Entity.PlayerCell(gameServer.getNextNodeId(), player, startPos, newMass);
         split.setAngle(angle);
-        split.setMoveEngineData(splitSpeed, 32, 0.85); 
+        split.setMoveEngineData(splitSpeed, 10, 0.85); 
         split.calcMergeTime(gameServer.config.playerRecombineTime);
         gameServer.setAsMovingNode(split);
         gameServer.addNode(split);

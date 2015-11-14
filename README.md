@@ -10,9 +10,7 @@ Copy of ogar that I heavily modified, and will continue to update. The [OgarProj
 ##### WORKING
 
 
-* Leap : Fix spacebar problem 
-* FFATime : display time on scoreboard
-* FFATime : set how long to you want
+* NOTHING...
 
 
 ##### SOON

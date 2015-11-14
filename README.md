@@ -101,7 +101,9 @@ Id   | Name
 13   | Team Z
 14   | Team X
 15   | FFA Time Limited (BETA)
-16   | Leap (BETA)
+16   | Leap
+17   | ?
+18   | Murder (BETA)
 20   | Rainbow FFA
 21   | Debug
 

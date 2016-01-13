@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         Anıl AgarPlus
+// @name         Anil-AgarPlus
 // @namespace    LarKen.AgarPlus
 // @version      1.1
 // @description  Anıl Canberk DURAN'ın kişisel scriptidir.
 // @author       LarKen
 // @license      MIT
 // @match        http://agar.io/*
-// @updateURL    
+// @updateURL    https://github.com/LarKenTR/Anil-OgarPlus/raw/master/Anil-AgarPlus.user.js
 // @require      http://cdn.jsdelivr.net/msgpack/1.05/msgpack.js
 // @grant        none
 // @run-at       document-body

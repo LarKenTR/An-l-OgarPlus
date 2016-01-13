@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Anil-AgarPlus
 // @namespace    LarKen.AgarPlus
-// @version      1.2
+// @version      1.1
 // @description  Anıl Canberk DURAN'ın kişisel scriptidir.
 // @author       LarKen
 // @license      MIT
